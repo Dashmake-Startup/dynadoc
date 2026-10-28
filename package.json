@@ -268,7 +268,7 @@
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/katex": "^0.16.8",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.6.5",
     "@types/xterm": "^3.0.0",
     "@unocss/preset-icons": "^66.7.5",
     "@unocss/preset-uno": "^66.7.5",
