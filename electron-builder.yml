@@ -1,0 +1,92 @@
+appId: com.dynadoc.app
+productName: dynadoc
+# Required for the OAuth deep link to reach packaged builds. On macOS,
+# app.setAsDefaultProtocolClient() alone is not enough: Launch Services only
+# routes dynadoc:// to a bundle that declares the scheme (CFBundleURLTypes),
+# which electron-builder generates from this block.
+protocols:
+  - name: Dynadoc
+    schemes:
+      - dynadoc
+fileAssociations:
+  - ext: xddoc
+    name: Dynadoc Document
+    role: Editor
+    icon: build/icon
+  - ext: sddoc
+    name: Dynadoc Secured Document
+    role: Editor
+    icon: build/icon
+directories:
+  buildResources: build
+files:
+  # - "out/**/*"                         # ← CRITICAL: Include electron-vite's output folder (change to "dist/**/*" if using dist)
+  # - "package.json"                     # ← CRITICAL: Always include package.json at the bundle root
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+
+asar: true
+# Unpack binaries so they can be executed by the OS
+asarUnpack:
+  - '**/bin/**/*'
+
+win:
+  executableName: dynadoc
+  extraResources:
+    - from: resources/bin/win
+      to: bin/win
+    - from: resources/languagetool # Included in all
+      to: languagetool
+
+mac:
+  identity: null
+  entitlementsInherit: build/entitlements.mac.plist
+  # Logic to handle Intel vs ARM specific folders if building separately
+  extraResources:
+    - from: resources/bin/mac
+      to: bin/mac
+    - from: resources/languagetool
+      to: languagetool
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+linux:
+  target:
+    - AppImage
+    - snap
+    - deb
+  extraResources:
+    - from: resources/bin/linux
+      to: bin/linux
+    - from: resources/languagetool
+      to: languagetool
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+
+dmg:
+  artifactName: ${name}-${version}.${ext}
+
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: generic
+  url: https://example.com/auto-updates
+electronDownload:
+  mirror: https://npmmirror.com/mirrors/electron/
+# Global extraResources removed to prevent duplication/bloat
+
+# extraResources:
+#   # - from: resources/bin
+#   #   to: bin
+#   - from: resources/
+#     to: .

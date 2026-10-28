@@ -1,0 +1,36 @@
+{
+  "name": "tiptap-pagination-plus",
+  "version": "1.1.2",
+  "description": "Tiptap table extra options like duplicate column, duplicate row etc...",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc-watch --onSuccess \"echo 'Build completed'\""
+  },
+  "keywords": ["tiptap", "table", "duplicate", "column", "row", "pagination"],
+  "author": "Romik Makavana",
+  "license": "MIT",
+  "dependencies": {
+    "@tiptap/core": "^2.2.4",
+    "@tiptap/extension-table": "^2.12.0",
+    "@tiptap/extension-table-cell": "^2.12.0",
+    "@tiptap/extension-table-header": "^2.12.0",
+    "@tiptap/extension-table-row": "^2.12.0",
+    "@tiptap/pm": "^2.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.2",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.8.3"
+  },
+  "bugs": {
+    "url": "https://github.com/RomikMakavana/tiptap-pagination-plus/issues"
+  },
+  "homepage": "https://romikmakavana.me/tiptap-pagination/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RomikMakavana/tiptap-pagination-plus"
+  }
+}

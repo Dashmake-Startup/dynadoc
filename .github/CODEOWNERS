@@ -1,0 +1,31 @@
+# Code owners — automatically requested as reviewers on every pull request.
+# https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
+#
+# An entry that does not resolve to a collaborator with write access is
+# ignored silently: no review is requested and nothing warns you. Keep this
+# file in step with the repository's actual collaborators.
+#
+# @Dashmake-Startup/maintainers holds write access on this repository and
+# contains the seven members of the organisation. Both facts have to stay true:
+# the team losing repository access, or a member leaving the team, is reported
+# nowhere — the rule just quietly stops requesting reviews.
+#
+# A team named as code owner is requested as a whole; one approval from any of
+# its members satisfies the rule.
+
+# Default.
+* @Dashmake-Startup/maintainers
+
+# Tooling, CI and governance — deliberately narrower.
+/.github/                 @KevinAkpe
+/electron-builder.yml     @KevinAkpe
+/electron.vite.config.ts  @KevinAkpe
+/package.json             @KevinAkpe
+/package-lock.json        @KevinAkpe
+/tsconfig*.json           @KevinAkpe
+/eslint.config.*          @KevinAkpe
+/.husky/                  @KevinAkpe
+
+# Security-sensitive: main process, preload surface, native bridge.
+/src/main/      @KevinAkpe
+/src/preload/   @KevinAkpe

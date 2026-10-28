@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "dynadoc",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": false,
+      "bump-minor-pre-major": false,
+      "draft": false,
+      "prerelease": false
+    }
+  },
+  "changelog-sections": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Fixes" },
+    { "type": "perf", "section": "Performance" },
+    { "type": "security", "section": "Security" },
+    { "type": "docs", "section": "Documentation", "hidden": false },
+    { "type": "chore", "section": "Housekeeping", "hidden": true },
+    { "type": "ci", "section": "Tooling", "hidden": true },
+    { "type": "refactor", "section": "Refactoring", "hidden": true },
+    { "type": "test", "hidden": true }
+  ]
+}

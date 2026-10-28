@@ -1,0 +1,37 @@
+[
+  {
+    "id": "5069eece-7c9a-442e-a053-c1c41fc20d3e",
+    "type": "text",
+    "visible": true,
+    "x": 50,
+    "y": 100,
+    "width": 249,
+    "height": 40,
+    "opacity": 1,
+    "blend": "SrcOver",
+    "blur": 0,
+    "rotation": 0,
+    "scaleX": 1,
+    "scaleY": 1,
+    "text": "Hello CanvasKit!",
+    "fontSize": 32,
+    "fontFamily": "Arial",
+    "color": "#000000"
+  },
+  {
+    "id": "ca575d3f-60e2-45a2-b72f-2f4a68f0c602",
+    "type": "image",
+    "visible": true,
+    "x": 5.096435546875,
+    "y": 209.4822998046875,
+    "width": 1000,
+    "height": 1000,
+    "opacity": 1,
+    "blend": "SrcOver",
+    "blur": 0,
+    "rotation": 0,
+    "scaleX": 1,
+    "scaleY": 1,
+    "imagePath": "test/image/layers/layer-ca575d3f-60e2-45a2-b72f-2f4a68f0c602.png"
+  }
+]

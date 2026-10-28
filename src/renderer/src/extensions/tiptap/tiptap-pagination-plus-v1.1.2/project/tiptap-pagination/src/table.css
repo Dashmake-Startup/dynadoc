@@ -1,0 +1,20 @@
+.tableWrapper table {
+  @apply w-full items-center bg-transparent border-collapse border-none;
+}
+
+.tableWrapper table th {
+  @apply border;
+}
+
+.tableWrapper table td {
+  @apply border;
+}
+
+#editor table tbody {
+  width: 100%;
+}
+#editor table td,
+#editor table th {
+  border: 1px solid black;
+  padding: 5px;
+}

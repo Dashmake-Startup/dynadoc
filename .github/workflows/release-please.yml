@@ -1,0 +1,36 @@
+name: Release
+
+# Keeps a version and a changelog for this repository.
+#
+# Release Please reads conventional commit subjects on main, opens a pull
+# request that bumps package.json and writes CHANGELOG.md, and tags the
+# release when that pull request is merged.
+#
+# A note on what the changelog will say for now: main currently receives
+# squashed `chore(sync)` commits from the private client repository, so the
+# early entries will be thin. That is expected and harmless. The mechanism is
+# put in place now so that versions and tags exist and keep accumulating; it
+# gets its real value the day the work moves into this repository and the
+# commits become genuine conventional commits.
+#
+# Once a release is tagged here, the image build in web-image.yml is where the
+# publish hooks in: it gains `packages: write`, a ghcr.io login with the
+# built-in GITHUB_TOKEN, and `push: true` with the released version as its tag.
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json

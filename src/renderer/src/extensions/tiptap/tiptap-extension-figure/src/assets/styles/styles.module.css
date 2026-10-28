@@ -1,0 +1,84 @@
+.wrapper-element {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  width: fit-content;
+  margin-inline: 0;
+}
+.wrapper-element.active {
+  border: 2px dashed #6c6c6c;
+}
+
+.figure-element {
+}
+
+.caption-element {
+  text-align: center;
+  margin-top: 8px;
+  min-height: 1em;
+  margin: 0.5rem 2rem;
+  padding: 0.5rem 0;
+}
+.caption-element:hover {
+  border-radius: 4px;
+  border: 2px dashed #6c6c6c;
+}
+
+.caption-controls-element {
+  position: absolute;
+  bottom: 7.5%;
+  left: 50%;
+  width: 40px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  border: 2px solid #6c6c6c;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-caption-button,
+.add-caption-button {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.remove-caption-button:hover,
+.add-caption-button:hover {
+  opacity: 0.5;
+}
+
+.dot-element {
+  position: absolute;
+  border: 1.5px solid #6c6c6c;
+  border-radius: 50%;
+}
+
+.image-alignment-container {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  width: 100px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  border: 2px solid #6c6c6c;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.image-alignment-control {
+  cursor: pointer;
+  font-size: 20px;
+}
+.image-alignment-control:hover {
+  opacity: 0.5;
+}

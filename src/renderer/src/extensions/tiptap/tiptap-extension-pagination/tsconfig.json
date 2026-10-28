@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        /* Language and Module Target */
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "moduleResolution": "Node",
+
+        /* TypeScript Features */
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+
+        /* Output and Emit Options */
+        "outDir": "./dist",
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "./dist",
+        "emitDeclarationOnly": false,
+        "sourceMap": true,
+        "removeComments": false,
+        "noEmitOnError": true,
+
+        /* Experimental and JSX */
+        "jsx": "react-jsx",
+        "useDefineForClassFields": true,
+
+        /* Linting and Safety */
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+
+        /* Compatibility Options */
+        "isolatedModules": true,
+        "allowJs": false
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist", "test", "dev"]
+}

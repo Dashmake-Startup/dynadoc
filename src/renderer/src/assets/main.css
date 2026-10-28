@@ -1,0 +1,2160 @@
+/* @import './base.css'; */
+@import './css/editor.css';
+@import './css/wps-tokens.css';
+@import './css/wps-skin.css';
+
+@font-face {
+  font-family: 'Calibri';
+  src:
+    local('Carlito'),
+    url('/fonts/croscore/Carlito-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibri';
+  src:
+    local('Carlito Italic'),
+    url('/fonts/croscore/Carlito-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibri';
+  src:
+    local('Carlito Bold'),
+    url('/fonts/croscore/Carlito-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibri';
+  src:
+    local('Carlito Bold Italic'),
+    url('/fonts/croscore/Carlito-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cambria';
+  src:
+    local('Caladea'),
+    url('/fonts/croscore/Caladea-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src:
+    local('Arimo'),
+    url('/fonts/croscore/Arimo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src:
+    local('Arimo Italic'),
+    url('/fonts/croscore/Arimo-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src:
+    local('Arimo Bold'),
+    url('/fonts/croscore/Arimo-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src:
+    local('Arimo Bold Italic'),
+    url('/fonts/croscore/Arimo-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src:
+    local('Tinos'),
+    url('/fonts/croscore/Tinos-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src:
+    local('Tinos Italic'),
+    url('/fonts/croscore/Tinos-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src:
+    local('Tinos Bold'),
+    url('/fonts/croscore/Tinos-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src:
+    local('Tinos Bold Italic'),
+    url('/fonts/croscore/Tinos-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lucida Handwriting';
+  src:
+    local('Lumanosimo'),
+    url('/fonts/croscore/Lumanosimo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Three interface faces, one job each: Bricolage Grotesque for titles,
+   Archivo for running text, IBM Plex Mono for figures and technical labels.
+   They ship inside the app rather than from a font CDN, as Inter did before
+   them: this product is sold on sovereignty, and a webfont link is a request
+   to somebody else's server on every cold start.
+
+   Bricolage and Archivo are variable files covering 100-900 in one file per
+   subset. IBM Plex Mono has no variable release upstream, so it ships as two
+   static weights, 400 and 600, and the rules below ask for exactly those so
+   the browser never has to synthesise one.
+
+   The paths are relative, unlike the croscore block above, so that Vite
+   bundles them and rewrites the URL. The desktop app is loaded with
+   loadFile(), and an absolute /fonts/… would resolve against the filesystem
+   root there, which is why the faces above list local() first and treat
+   their own URL as a best-effort fallback.
+
+   Those faces are a different job and must not be confused with these:
+   they are metric-compatible substitutes (Carlito for Calibri, Arimo for
+   Arial, Tinos for Times New Roman) that keep an imported .docx paginating
+   the way its author saw it. They dress documents; these three dress the
+   app, and the document faces stay exactly as they are. */
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('./fonts/bricolage-grotesque/bricolage-grotesque-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('./fonts/bricolage-grotesque/bricolage-grotesque-latin-ext-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('./fonts/archivo/archivo-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('./fonts/archivo/archivo-latin-ext-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./fonts/ibm-plex-mono/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./fonts/ibm-plex-mono/ibm-plex-mono-latin-ext-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./fonts/ibm-plex-mono/ibm-plex-mono-latin-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./fonts/ibm-plex-mono/ibm-plex-mono-latin-ext-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+/* ---- Typographic roles ----
+   Scoped to app surfaces on purpose. A global h1 rule would also repaint the
+   headings inside a document, which are the user's content, not our chrome. */
+.brand-ui h1,
+.brand-ui h2,
+.brand-ui h3 {
+  font-family: var(--brand-font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Figures and technical labels. tabular-nums keeps a column of counters from
+   dancing as the numbers change, which is the whole point of putting them in
+   a monospaced face. */
+.drv-stat__k,
+.drv-stat__v,
+.drv-state,
+.dash-pill,
+.dash-pill-soft {
+  font-family: var(--brand-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Brand furniture ----
+   These two rules are global rather than scoped to a component because the
+   theme class they key off (.dark on <html>) sits outside every component,
+   and Svelte prunes a scoped selector whose elements it cannot see. */
+
+.dash-rail-btn {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--color-base-content);
+  opacity: 0.6;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease;
+}
+
+.dash-rail-btn:hover {
+  background: var(--color-base-300);
+  opacity: 1;
+}
+
+/* --accent-text et non --accent : l'accent est une couleur de remplissage ;
+   posee en icone sur le blanc du rail elle ne donne que 2,34:1. */
+.dash-rail-btn--on {
+  background: var(--color-base-100);
+  color: var(--accent-text);
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.dash-nav {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--color-base-200);
+  /* Sous 400 px les quatre pilules dépassent la fenêtre et poussaient le rail
+     hors de l'écran : la barre défile au lieu de déborder. */
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dash-nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* À 400 px la quatrième pilule est hors champ : un fondu au bord droit dit
+   qu'il y a quelque chose à faire défiler, au lieu de la couper net. */
+@media (max-width: 640px) {
+  .dash-nav {
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 22px), transparent 100%);
+  }
+}
+
+.dash-nav-item {
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  /* --theme-text-muted resolves to #86868d, which is 3.29:1 on base-200 —
+     below AA for 13px. The same ink at .7 gives 5.06:1 light, 7.12:1 dark. */
+  color: var(--color-base-content);
+  opacity: 0.7;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dash-nav-item:hover {
+  opacity: 1;
+}
+
+.dash-card {
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-200);
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.dash-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--color-base-200);
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 140ms ease;
+}
+
+.dash-chip:hover {
+  border-color: color-mix(in srgb, var(--tile) 55%, transparent);
+}
+
+.dash-doc {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-radius: 18px;
+  background: var(--tint);
+  color: var(--color-base-content);
+  padding: 15px 16px;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 140ms ease;
+}
+
+.dash-doc:hover {
+  transform: translateY(-1px);
+}
+
+.dash-pill,
+.dash-pill-soft {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.dash-pill {
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+}
+
+.dash-pill-soft {
+  background: color-mix(in srgb, var(--color-base-100) 70%, transparent);
+  color: var(--color-base-content);
+}
+
+.dash-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-on);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dash-primary:hover {
+  background: color-mix(in srgb, var(--accent) 88%, #000000);
+}
+
+.dash-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 1px solid var(--color-base-200);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-base-content);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dash-outline:hover {
+  border-color: var(--color-base-300);
+}
+
+.dash-outline--sm {
+  min-height: 34px;
+  padding: 8px 13px;
+  font-size: 12px;
+}
+
+.dash-ghost-round {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-base-200);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-base-content);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.dash-ghost-round:hover {
+  border-color: var(--color-base-300);
+}
+
+.dash-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 6px;
+  border-radius: 13px;
+}
+
+.dash-row:hover {
+  background: var(--color-base-200);
+}
+
+.dash-row__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--tint);
+  color: var(--tile);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.dash-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-base-200);
+  overflow: hidden;
+}
+
+.dash-bar > div {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.dash-empty {
+  border-radius: 18px;
+  background: var(--color-base-200);
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.dash-planline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-base-200);
+  border-radius: 999px;
+}
+
+/* ---- Panneau des lecteurs ----
+   Même langage que le tableau de bord, et les mêmes jetons : surfaces
+   teintées plutôt que bordures, rayons généreux, un seul accent. Le panneau
+   ne fait que 232 px, donc la densité monte d'un cran — les corps passent à
+   11-12 px — mais l'opacité ne descend jamais sous .55, là où le panneau
+   précédent écrivait en 8 px à 20 %. */
+.drv-panel {
+  position: relative;
+  background: var(--color-base-100);
+  border-radius: 16px;
+  overflow: hidden;
+  /* Une ombre très douce plutôt qu'une bordure : sans elle, deux lecteurs
+     l'un sous l'autre se lisaient comme une seule suite de bandes. */
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+/* Le lecteur actif est la seule chose que l'accent désigne. Marqueur dessiné
+   en ::before et non en box-shadow interne, que les coins arrondis
+   découpaient en arc. */
+.drv-panel--on::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent-text);
+  z-index: 1;
+}
+
+.drv-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 10px 11px 13px;
+}
+
+.drv-head__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.drv-panel--on .drv-head__icon {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent-text);
+}
+
+.drv-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.drv-sub {
+  font-size: 11px;
+  opacity: 0.7;
+  line-height: 1.3;
+}
+
+.drv-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-base-200);
+}
+
+.drv-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  /* 600, not 700: this label is set in IBM Plex Mono, which ships only 400
+     and 600. Asking for 700 makes the browser synthesise a bold, which
+     smears a monospaced label and widens it out of its tabular column. */
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.drv-state__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.drv-state--on {
+  color: var(--accent-text);
+}
+
+.drv-state--off {
+  opacity: 0.6;
+}
+
+/* Trois lignes, pas trois colonnes. Le panneau fait 232 px : une fois retirés
+   les marges et les gouttières, chaque colonne n'offrait que 47 px utiles,
+   quand « Dossiers » en demande 56 et « 999.9 MB » 63 — mesuré, pas estimé.
+   La grille coupait donc les libellés et mettait les tailles en ellipse. En
+   lignes, le libellé et la valeur se partagent les 208 px disponibles et rien
+   n'est tronqué, quelle que soit la langue ou la taille du fichier. */
+.drv-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 0;
+}
+
+.drv-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: var(--color-base-200);
+  border-radius: 10px;
+  padding: 7px 11px;
+  min-width: 0;
+}
+
+.drv-stat__k {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 10px;
+  /* 600, not 700: IBM Plex Mono ships 400 and 600 only. See .drv-state. */
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.drv-stat__v {
+  flex: none;
+  font-size: 13px;
+  /* 600, not 700: IBM Plex Mono ships 400 and 600 only. See .drv-state. */
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.drv-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+.drv-search__wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.drv-search__icon {
+  position: absolute;
+  left: 11px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.drv-input {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  font: inherit;
+  font-size: 12px;
+  padding: 0 12px 0 30px;
+  outline: none;
+}
+
+.drv-input:focus {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.drv-toggle {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  opacity: 0.65;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex: none;
+}
+
+.drv-toggle:hover {
+  opacity: 1;
+}
+
+.drv-toggle--on {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent-text);
+  opacity: 1;
+}
+
+.drv-act {
+  height: 28px;
+  min-width: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+  opacity: 0.7;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.drv-act:hover {
+  opacity: 1;
+  background: var(--color-base-300);
+}
+
+.drv-act:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.drv-signin {
+  height: 28px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-on);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.drv-msg {
+  padding: 26px 16px;
+  text-align: center;
+}
+
+.drv-msg__t {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.drv-msg__s {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 3px;
+  line-height: 1.45;
+}
+
+.drv-err {
+  margin: 10px 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand-tile-form) 12%, transparent);
+  color: var(--color-base-content);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+/* La teinte garde la couleur d'alerte ; le message, lui, est du texte de
+   11 px : en --brand-tile-form il ne donnait que 3,99:1 sur son propre fond. */
+.drv-err i {
+  color: var(--brand-tile-form);
+}
+
+.drv-tree {
+  padding: 2px 6px 8px;
+  font-size: 12px;
+}
+
+/* Shared theme tokens */
+:root {
+  /* ---- Brand, sampled from the logo artwork and the home-screen mockup ----
+     Every value below was read off the two reference images rather than
+     guessed, so the app, the sign-in page and the e-mails can quote one
+     source. --brand-navy and --brand-teal are the two halves of the
+     wordmark ("dyna" / "doc"); --brand-ink-deep and --brand-mint are the
+     darkest and lightest points of the monogram's gradient.
+
+     Note --accent is NOT repointed at --brand-teal. The existing #00beac is
+     already a Dynadoc teal and is the closer match to the mockup's "New
+     Document" button; the logo's #058378 is a darker ink meant for type on
+     paper. Changing --accent would repaint every primary surface in the app,
+     which is a decision for Kevin, not a side effect of a logo swap. */
+  --brand-navy: #0d1d36;
+  --brand-teal: #058378;
+  --brand-ink-deep: #046377;
+  --brand-mint: #77e9c8;
+
+  /* The six Quick Create tiles. The mockup is a dark screen, so its own
+     sampled values live in the dark block below; these are the same six hues
+     dropped in luminance until they hold against a white panel. Taking the
+     mockup's #22eb77 or #ffd50c straight onto paper would leave two of the
+     six tiles effectively invisible. */
+  /* Fonds teintés des cartes du tableau de bord : la même teinte que le
+     type, assez pâle pour porter du texte à 4,5:1. */
+  --brand-tint-document: #e9f1fd;
+  --brand-tint-spreadsheet: #e7f6ec;
+  --brand-tint-presentation: #fbf1e6;
+  --brand-tint-design: #f2edfa;
+  --brand-tint-form: #fbe9ef;
+  --brand-tint-meeting: #f8f2db;
+
+  --brand-tile-document: #0b74d1;
+  --brand-tile-spreadsheet: #0f9d48;
+  --brand-tile-presentation: #c25f00;
+  --brand-tile-design: #8b2fa0;
+  --brand-tile-form: #d62d61;
+  --brand-tile-meeting: #a87f00;
+
+  /* The single interface stack. body resolves to it through
+     --vscode-font-family, which nothing in this repo has ever defined — the
+     chrome has been falling back to bare `sans-serif` (Helvetica) all along. */
+  --brand-font-sans:
+    'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  /* Titles only, and only on app surfaces. A document's own headings are
+     content and keep the faces the document carries. */
+  --brand-font-display:
+    'Bricolage Grotesque', 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
+  /* Figures and technical labels. The fallbacks are picked rather than
+     inherited: Menlo on macOS, Consolas on Windows, then the generic. */
+  --brand-font-mono: 'IBM Plex Mono', Menlo, Consolas, 'Courier New', monospace;
+  --vscode-font-family: var(--brand-font-sans);
+
+  /* Accent = original Dynadoc teal/green (per request, replacing the mockup red) */
+  --accent: #00beac;
+  /* --accent est une couleur de REMPLISSAGE : blanc dessus donne 2,34:1, et
+     posée en texte sur du blanc elle donne 2,34:1 aussi. D'où deux jetons de
+     plus, mesurés : --accent-on est l'encre qu'on pose SUR un remplissage
+     accent (7,27:1 en clair, 9,29:1 en sombre), --accent-text est l'accent
+     utilisé COMME texte ou icône sur une surface neutre (6,87:1 sur blanc,
+     6,26:1 sur base-200). --accent-text reprend --brand-ink-deep, le teal
+     sombre déjà relevé sur le logo. */
+  --accent-on: #06201e;
+  --accent-text: #046377;
+  --accent-soft: rgba(0, 190, 172, 0.1);
+  --color-primary: var(--accent);
+  --color-primary-content: #ffffff;
+  --bg-primary: #00beac;
+  --bg-primary-rgb: 0, 190, 172;
+  --theme-text-rgb: 255, 255, 255;
+  --primary: var(--accent);
+  --primary-rgb: var(--bg-primary-rgb);
+  --color-base-variant: var(--accent);
+  --caret-color: var(--accent);
+  --theme-popover-shadow:
+    0 30px 60px -18px rgba(15, 23, 42, 0.3), 0 18px 36px -20px rgba(15, 23, 42, 0.24);
+}
+
+[data-theme='dark'],
+.dark {
+  /* The Quick Create hues exactly as the home-screen mockup draws them. The
+     mockup is a dark screen, so this is the reference case and :root holds
+     the derived light one. */
+  --brand-tint-document: #16283c;
+  --brand-tint-spreadsheet: #14301f;
+  --brand-tint-presentation: #2f2615;
+  --brand-tint-design: #261a33;
+  --brand-tint-form: #341b26;
+  --brand-tint-meeting: #2f2a12;
+
+  --brand-tile-document: #54b7fa;
+  --brand-tile-spreadsheet: #22eb77;
+  --brand-tile-presentation: #ff8a02;
+  --brand-tile-design: #ae48be;
+  --brand-tile-form: #ff5f91;
+  --brand-tile-meeting: #ffd50c;
+
+  /* WPS layout tokens — dark. Accent = original teal/green (brighter for dark). */
+  --accent: #1ed6c2;
+  --accent-on: #06201e;
+  --accent-text: #1ed6c2;
+  --accent-soft: rgba(30, 214, 194, 0.18);
+  --bg: #151517;
+  --chrome: #202023;
+  --tabbar: #1a1a1d;
+  --ribbon: #252528;
+  --line: #37373c;
+  --line2: #2f2f34;
+  --text: #e7e7ea;
+  --muted: #8f8f97;
+  --inert: #b2b2ba;
+  --hover: #34343a;
+  --page: #2b2b2f;
+  --panel: #252528;
+  --field: #2e2e33;
+  --fieldline: #45454c;
+  --tabtxt: #b7b7bf;
+
+  --color-primary: var(--accent);
+  --primary: var(--accent);
+  --color-base-variant: var(--accent);
+  --caret-color: var(--accent);
+  --bg-primary: #1ed6c2;
+  --bg-primary-rgb: 30, 214, 194;
+  --primary-rgb: 30, 214, 194;
+
+  --root-bg: var(--bg) !important;
+  --color-base-white: white !important;
+  --color-base-100: var(--ribbon) !important;
+  --color-base-200: var(--chrome) !important;
+  --color-base-400: #1d1d20;
+  --color-base-300: var(--line) !important;
+  --color-base-content: var(--text);
+  --theme-text-1: var(--text);
+  --theme-text-muted: var(--muted);
+  --theme-border-subtle: var(--line);
+  --theme-surface-1: var(--ribbon);
+  --theme-surface-2: var(--chrome);
+  --theme-elevated: var(--hover);
+  --theme-elevated-text: var(--text);
+  --theme-elevated-strong: var(--hover);
+  --theme-backdrop-strong: rgba(0, 0, 0, 0.7);
+  --theme-overlay-soft: rgba(0, 0, 0, 0.2);
+  --theme-overlay-medium: rgba(0, 0, 0, 0.3);
+  --theme-overlay-strong: rgba(0, 0, 0, 0.4);
+  --theme-popover-bg: var(--panel);
+  --theme-popover-text: var(--text);
+
+  /* Raw triples daisyUI uses for base colors */
+  --b1: 37 37 40;
+  --b2: 32 32 35;
+  --b3: 55 55 60;
+}
+
+[data-theme='light'],
+.light {
+  /* WPS layout tokens — light. Accent = original teal/green. */
+  --accent: #00beac;
+  --accent-soft: rgba(0, 190, 172, 0.1);
+  --bg: #e9eaec;
+  --chrome: #f4f4f6;
+  --tabbar: #e3e3e7;
+  --ribbon: #ffffff;
+  --line: #e2e2e6;
+  --line2: #ededf1;
+  --text: #2c2c2e;
+  --muted: #86868d;
+  --inert: #5f6066;
+  --hover: #ececf0;
+  --page: #ffffff;
+  --panel: #ffffff;
+  --field: #ffffff;
+  --fieldline: #d8d8de;
+  --tabtxt: #52525a;
+
+  --color-primary: var(--accent);
+  --primary: var(--accent);
+  --color-base-variant: var(--accent);
+  --caret-color: var(--accent);
+
+  --root-bg: var(--bg) !important;
+  /* dark "ink" so color-mix(var(--color-base-white) X%) darkens on light surfaces */
+  --color-base-white: #0f172a !important;
+  --color-base-100: var(--ribbon) !important;
+  --color-base-200: var(--chrome) !important;
+  --color-base-300: var(--line) !important;
+  --color-base-400: #f8f9fb;
+  --color-base-content: var(--text);
+
+  --theme-text-rgb: 44, 44, 46;
+  --theme-text-1: var(--text);
+  --theme-text-muted: var(--muted);
+  --theme-border-subtle: var(--line);
+  --theme-surface-1: var(--ribbon);
+  --theme-surface-2: var(--chrome);
+  --theme-elevated-text: var(--text);
+  --theme-elevated: var(--hover);
+  --theme-elevated-strong: var(--hover);
+  --theme-backdrop-strong: rgba(148, 163, 184, 0.34);
+  --theme-overlay-soft: rgba(15, 23, 42, 0.04);
+  --theme-overlay-medium: rgba(15, 23, 42, 0.07);
+  --theme-overlay-strong: rgba(15, 23, 42, 0.12);
+  --theme-popover-bg: var(--panel);
+  --theme-popover-text: var(--text);
+
+  --b1: 255 255 255;
+  --b2: 244 244 246;
+  --b3: 226 226 230;
+}
+
+/* ===========================================================================
+   Per-document-type accent (WPS-style). The active document sets
+   data-doctype on <html>: Writer = blue, Sheets = green, Presentation =
+   orange, PDF = red. Everything wired to var(--accent) — the active ribbon
+   tab underline, the Share / Sign in buttons, tab badges, selections —
+   recolours automatically. :root[data-doctype] (0,1,1) outranks the plain
+   [data-theme] (0,1,0) accent declarations, and the dark-theme variants add
+   data-theme for a brighter, legible accent on the dark canvas.
+   When no document is open there is no data-doctype, so the default Dynadoc
+   teal accent defined above is kept.
+   =========================================================================== */
+/* The UI accent stays the single Dynadoc green for every document type — only
+   the per-type tab icons differ. data-doctype is still set on <html> (the
+   full-bleed worksheet layout below relies on it), but it no longer recolours
+   the accent. */
+:root[data-doctype] {
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --bg-primary: var(--accent);
+}
+
+/* ===========================================================================
+   Spreadsheet documents: WPS-style full-bleed grid. A spreadsheet has no
+   "page" — drop the floating-page padding / fixed page width so the grid
+   fills the editor body edge to edge. Gated on data-doctype=sheets, so the
+   Writer / Presentation paginated page is left untouched.
+   =========================================================================== */
+:root[data-doctype='sheets'] .editor-shell {
+  padding: 0 !important;
+  background: var(--page) !important;
+}
+:root[data-doctype='sheets'] .editor-shell .editor-stage,
+:root[data-doctype='sheets'] .editor-shell .editor-container,
+:root[data-doctype='sheets'] .editor-shell .editor-content {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+/* the white "page" wrapper holding the spreadsheet node */
+:root[data-doctype='sheets'] .editor-container > .m-auto {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+/* Continue the height chain through the ProseMirror editable and the
+   spreadsheet NodeViewWrapper — otherwise the grid's height:100% resolves
+   against an auto-height ancestor and collapses to zero. */
+:root[data-doctype='sheets'] .editor-content .ProseMirror {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+:root[data-doctype='sheets'] .ProseMirror > .node-sheet,
+:root[data-doctype='sheets'] .node-sheet,
+:root[data-doctype='sheets'] .node-sheet > .svelte-renderer,
+:root[data-doctype='sheets'] .ProseMirror > .node-view-sheet,
+:root[data-doctype='sheets'] .node-view-sheet {
+  display: block !important;
+  height: 100% !important;
+}
+:root[data-doctype='sheets'] .spreadsheet-node-view,
+:root[data-doctype='sheets'] .spreadsheet-preview-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+/* The FortuneSheet grid is mounted inside a custom element, which is
+   display:inline by default — so it measures a zero-height parent and paints
+   nothing. Make the host a block that fills the body. */
+:root[data-doctype='sheets'] react-spreadsheet-editor {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+/* a spreadsheet fills its node, so drop the FLOW checkerboard backdrop */
+:root[data-doctype='sheets'] .bg-checkerboard {
+  background-image: none !important;
+  background-color: var(--page) !important;
+}
+
+/* Light-mode compatibility layer for older dark-only utility classes used across components. */
+:is([data-theme='light'], .light) [class~='bg-[#1e1e1e]'] {
+  background-color: var(--theme-surface-1) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-[#252525]'] {
+  background-color: var(--theme-surface-2) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-[#0d0f12]/95'] {
+  background-color: var(--theme-popover-bg) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-black/70'] {
+  background-color: var(--theme-backdrop-strong) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-black/40'] {
+  background-color: var(--theme-overlay-strong) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-black/30'] {
+  background-color: var(--theme-overlay-medium) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-black/20'] {
+  background-color: var(--theme-overlay-soft) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-white/5'] {
+  background-color: rgba(var(--theme-text-rgb), 0.05) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-white/10'] {
+  background-color: rgba(var(--theme-text-rgb), 0.08) !important;
+}
+
+:is([data-theme='light'], .light) [class~='bg-white/20'] {
+  background-color: rgba(var(--theme-text-rgb), 0.12) !important;
+}
+
+:is([data-theme='light'], .light) [class~='hover:bg-white/5']:hover {
+  background-color: rgba(var(--theme-text-rgb), 0.05) !important;
+}
+
+:is([data-theme='light'], .light) [class~='hover:bg-white/10']:hover {
+  background-color: rgba(var(--theme-text-rgb), 0.1) !important;
+}
+
+:is([data-theme='light'], .light) [class~='hover:bg-white/20']:hover {
+  background-color: rgba(var(--theme-text-rgb), 0.14) !important;
+}
+
+:is([data-theme='light'], .light) [class~='border-white/5'] {
+  border-color: rgba(var(--theme-text-rgb), 0.08) !important;
+}
+
+:is([data-theme='light'], .light) [class~='border-white/10'] {
+  border-color: rgba(var(--theme-text-rgb), 0.12) !important;
+}
+
+:is([data-theme='light'], .light) [class~='border-white/20'] {
+  border-color: rgba(var(--theme-text-rgb), 0.18) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/90'] {
+  color: rgba(var(--theme-text-rgb), 0.9) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/70'] {
+  color: rgba(var(--theme-text-rgb), 0.7) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/60'] {
+  color: rgba(var(--theme-text-rgb), 0.6) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/50'] {
+  color: rgba(var(--theme-text-rgb), 0.5) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/40'] {
+  color: rgba(var(--theme-text-rgb), 0.4) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/30'] {
+  color: rgba(var(--theme-text-rgb), 0.3) !important;
+}
+
+:is([data-theme='light'], .light) [class~='text-white/20'] {
+  color: rgba(var(--theme-text-rgb), 0.2) !important;
+}
+
+html,
+body,
+#app-body-wrapper {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* overflow: hidden; */
+  /* background-image: url('./wavy-lines.svg'); */
+  background-size: cover;
+  user-select: none;
+  background: linear-gradient(180deg, var(--theme-surface-2), var(--root-bg));
+  color: var(--theme-text-1);
+  font-family: var(--vscode-font-family, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+  font-weight: var(--vscode-font-weight, normal);
+  cursor: initial !important;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: revert;
+  /* font-weight: revert; */
+}
+
+ol {
+  /* list-style: inside; */
+}
+
+ol > li {
+  /* list-style: auto; */
+}
+
+ul {
+  /* list-style: inside; */
+}
+
+/* .tiptap ul>li {
+  list-style: initial;
+}
+
+.tiptap ul[data-list-preset="tree"] {
+  list-style-type: disc;
+}
+
+.tiptap ul[data-list-preset="tree"] ul {
+  list-style-type: circle;
+}
+
+.tiptap ul[data-list-preset="tree"] ul ul {
+  list-style-type: square;
+}
+
+.tiptap ol[data-list-preset="outline"] {
+  list-style-type: upper-roman;
+}
+
+.tiptap ol[data-list-preset="outline"] ol {
+  list-style-type: upper-alpha;
+}
+
+.tiptap ol[data-list-preset="outline"] ol ol {
+  list-style-type: decimal;
+} */
+
+body.is-loading,
+body.is-loading * {
+  cursor: wait !important;
+}
+
+li > * {
+  /* display: inline-block; */
+}
+
+a {
+  color: revert;
+  text-decoration: revert;
+}
+
+svg {
+  width: inherit !important;
+  height: inherit !important;
+  /* opacity: 0.8; */
+}
+
+.bg-base-variant {
+  background-color: var(--color-base-variant);
+}
+
+#app-body {
+  /* display: flex; */
+  /* flex-direction: column; */
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* height: 100vh; */
+  /* fill the Electron window */
+}
+
+#title-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  height: 45px;
+  /* height: 58px; */
+  /* background-color:var(--root-bg) */
+  background-color: var(--color-base-200);
+  /* flex-shrink: 0; */
+  /* Prevents the header from squishing */
+  /* background-color: #f8d7da; */
+  /* Visual aid */
+}
+
+#main {
+  /* flex-grow: 1; */
+  /* This tells div2 to take up all remaining space */
+  overflow: hidden;
+  /* Adds a scrollbar if the content inside is too long */
+  /* background-color: #d1ecf1; */
+  /* Visual aid */
+
+  margin-top: 45px;
+  /* margin-top: 58px; */
+  /* flex: 1;
+      flex-grow: 1;
+      overflow: hidden;
+      margin-top: 30px; */
+  /* take all available space between bars */
+  /* take up remaining space */
+  /* scroll independently if needed */
+}
+
+#status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  /* height: 3vh; */
+  background-color: var(--color-base-200);
+  /* background-color: green; */
+  height: 30px;
+  /* flex-shrink: 0; */
+  /* Prevents the footer from squishing */
+  /* background-color: #d4edda; */
+  /* Visual aid */
+}
+
+.scrollable-section {
+  height: 100%;
+  min-height: 0;
+  /* height: 100vh; */
+  /*height: calc(100vh - 35px - 25px);*/
+  /* Adjust height according to the title-bar height */
+  overflow: auto;
+}
+
+.ph-light {
+  /* opacity: 0.8; */
+}
+
+/* Review/Grammar display modes */
+.review-markup-none .review-insert {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.review-markup-none .review-delete {
+  display: none !important;
+}
+
+.review-markup-simple .review-delete {
+  display: none !important;
+}
+
+.review-markup-original .review-insert {
+  display: none !important;
+}
+
+.review-markup-original .review-delete {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.review-markup-none span[data-suggestion='true']::after,
+.review-markup-simple span[data-suggestion='true']::after,
+.review-markup-original span[data-suggestion='true']::after {
+  display: none !important;
+}
+
+.review-comments-hidden comment {
+  display: none !important;
+}
+
+.review-comments-hidden #word-comment-gutter-widget {
+  display: none !important;
+}
+
+.review-comments-margin-only .word-comment-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.review-comments-margin-only .word-comment-resolved {
+  background: transparent !important;
+}
+
+/* .word-comment-highlight {
+  background: rgba(250, 204, 21, 0.35);
+  border-radius: 3px;
+  box-decoration-break: clone;
+}
+
+.word-comment-resolved {
+  background: rgba(148, 163, 184, 0.25);
+}
+
+.review-comments-hidden .word-comment-highlight {
+  background: transparent;
+  box-shadow: none;
+} */
+
+/* Base Highlight: The "Marker" Look */
+.word-comment-highlight {
+  position: relative;
+  background: rgba(250, 204, 21, 0.2);
+  /* Softer initial state */
+  border-bottom: 2px solid rgba(250, 204, 21, 0.5);
+  border-radius: 2px;
+  transition: all 0.2s ease-in-out;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: pointer;
+}
+
+/* Hover/Active State: "Glow" Effect */
+/* Triggered when hovering the text OR when the gutter card is hovered */
+.word-comment-highlight:hover,
+.word-comment-highlight.is-active {
+  background: rgba(250, 204, 21, 0.45);
+  border-bottom-color: rgba(250, 204, 21, 1);
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.2);
+}
+
+/* Resolved State: Desaturated & Discreet */
+.word-comment-resolved {
+  background: rgba(148, 163, 184, 0.1);
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.4);
+  color: inherit;
+  /* Don't wash out the text color too much */
+}
+
+.word-comment-resolved:hover {
+  background: rgba(148, 163, 184, 0.2);
+  border-bottom-style: solid;
+}
+
+/* Hidden State: Clean Document View */
+.review-comments-hidden .word-comment-highlight {
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  cursor: text;
+}
+
+/* Optional: Add a small "comment icon" at the end of the highlight 
+   only on hover to mimic MS Word's modern comments */
+.word-comment-highlight:hover::after {
+  content: '💬';
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  font-size: 10px;
+  filter: grayscale(1);
+  opacity: 0.8;
+}
+
+.editor-container {
+  position: relative;
+}
+
+.grammar-suggestions-hidden #grammar-suggestion-widget {
+  display: none !important;
+}
+
+.grammar-suggestions-hidden .lt-error-underline {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+.bg-hatched-5-important {
+  background: repeating-linear-gradient(
+    45deg,
+    rgb(128, 128, 128),
+    rgba(128, 128, 128, 1) 2px,
+    transparent 2px,
+    transparent 5px
+  ) !important;
+  cursor: not-allowed;
+  /* background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 2px, transparent 2px, transparent 5px) !important; */
+  /* background-color: #f4f5f7; */
+  /* --hatch-color: rgba(0,0,0,0.08);
+  --hatch-size: 8px;
+  
+  background: repeating-linear-gradient(
+    45deg,
+    var(--hatch-color),
+    var(--hatch-color) 1px,
+    transparent 1px,
+    transparent var(--hatch-size)
+  );
+  */
+
+  /* background: repeating-linear-gradient(45deg, rgba(220, 220, 220, 1), rgba(220, 220, 220, 1) 2px, transparent 1px, transparent 6px), repeating-linear-gradient(-45deg, rgba(220, 220, 220, 1), rgba(220, 220, 220, 1) 1px, transparent 1px, transparent 6px) !important; */
+  /* background-color: #f4f5f7 !important; */
+  /* background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 8px); */
+}
+
+.bg-checkerboard {
+  /* Apply the checkerboard */
+  --sz: 10px;
+  --c1: #fff;
+  --c2: #e0e0e0;
+  background-image: conic-gradient(
+    var(--c2) 25%,
+    var(--c1) 0 50%,
+    var(--c2) 0 75%,
+    var(--c1) 0
+  ) !important;
+  background-size: calc(var(--sz) * 2) calc(var(--sz) * 2) !important;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.mask-gradient {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 30px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  /* mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 40px,
+    black calc(100% - 40px),
+    transparent 100%
+  ); */
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+/* 1. Control the Width of the Vertical Scrollbar (Makes the thumb thinner) */
+.simplebar-track.simplebar-vertical {
+  /* This sets the width of the entire track. Reducing this value makes the thumb smaller */
+  width: 2px;
+}
+
+/* 2. Control the Height of the Horizontal Scrollbar (Makes the thumb shorter) */
+.simplebar-track.simplebar-horizontal {
+  /* This sets the height of the entire track. */
+  height: 2px;
+}
+
+/* Tiptap Placeholders are displayed with the help of CSS. */
+/* .tiptap p.is-editor-empty:first-child::before { */
+/* .tiptap > p.is-editor-empty:first-child::before { */
+.tiptap *[data-placeholder].is-empty.is-editor-empty::before {
+  /* .tiptap p { */
+  color: #adb5bd;
+  /* color: #adb5bd; */
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Display Tiptap Placeholders on every new line. */
+.tiptap p.is-empty::before {
+  /* color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none; */
+}
+
+.paste-options-popover {
+  position: fixed;
+  z-index: 10000;
+  min-width: 220px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+}
+
+.paste-options-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.paste-options-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.paste-options-button:hover {
+  background: #f1f5f9;
+  border-color: #cbd5f5;
+}
+
+.paste-options-label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.paste-options-hint {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.tiptap table th,
+.tiptap table td {
+  border: var(--table-border-width, 1px) solid var(--table-border-color, transparent);
+}
+
+.tiptap table {
+  --table-border-color: transparent;
+  --table-shading-color: transparent;
+  --table-border-width: 1px;
+}
+
+.tiptap.table-gridlines table th,
+.tiptap.table-gridlines table td {
+  --table-border-color: var(--color-base-200);
+}
+
+.tiptap table[data-shading-color] td,
+.tiptap table[data-shading-color] th {
+  background-color: var(--table-shading-color, transparent);
+}
+
+.tiptap table[data-banded-rows='true'] tr:nth-child(even) td,
+.tiptap table[data-banded-rows='true'] tr:nth-child(even) th {
+  background-color: rgba(148, 163, 184, 0.18);
+}
+
+.tiptap table[data-banded-columns='true'] tr td:nth-child(even),
+.tiptap table[data-banded-columns='true'] tr th:nth-child(even) {
+  background-color: rgba(148, 163, 184, 0.18);
+}
+
+.tiptap table[data-header-row='true'] tr:first-child td,
+.tiptap table[data-header-row='true'] tr:first-child th {
+  background-color: rgba(59, 130, 246, 0.2);
+  font-weight: 600;
+}
+
+.tiptap table[data-total-row='true'] tr:last-child td,
+.tiptap table[data-total-row='true'] tr:last-child th {
+  background-color: rgba(59, 130, 246, 0.16);
+  font-weight: 600;
+}
+
+.tiptap table[data-first-column='true'] tr td:first-child,
+.tiptap table[data-first-column='true'] tr th:first-child {
+  font-weight: 600;
+}
+
+.tiptap table[data-last-column='true'] tr td:last-child,
+.tiptap table[data-last-column='true'] tr th:last-child {
+  font-weight: 600;
+}
+
+.tiptap table[data-style-preset='blue'] tr:first-child td,
+.tiptap table[data-style-preset='blue'] tr:first-child th {
+  background-color: rgba(37, 99, 235, 0.25);
+}
+
+.tiptap table[data-style-preset='emerald'] tr:first-child td,
+.tiptap table[data-style-preset='emerald'] tr:first-child th {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.tiptap table[data-style-preset='rose'] tr:first-child td,
+.tiptap table[data-style-preset='rose'] tr:first-child th {
+  background-color: rgba(244, 63, 94, 0.2);
+}
+
+.tiptap table[data-style-preset='gold'] tr:first-child td,
+.tiptap table[data-style-preset='gold'] tr:first-child th {
+  background-color: rgba(245, 158, 11, 0.2);
+}
+
+.tiptap img {
+  max-width: 100%;
+}
+
+.tiptap img[data-align='left'] {
+  display: block;
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.tiptap img[data-align='center'] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tiptap img[data-align='right'] {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.tiptap img[data-wrap='inline'] {
+  float: none;
+}
+
+.tiptap img[data-wrap='square'],
+.tiptap img[data-wrap='tight'] {
+  float: left;
+  margin: 0 12px 12px 0;
+}
+
+.tiptap img[data-wrap='behind'] {
+  position: relative;
+  z-index: 0;
+}
+
+.tiptap img[data-wrap='infront'] {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive foundations */
+:root {
+  --mobile-bottom-bar: 56px;
+}
+
+html[data-viewport='xs'],
+html[data-viewport='sm'] {
+  font-size: 13px;
+}
+
+html[data-viewport='xs'] body,
+html[data-viewport='sm'] body {
+  overscroll-behavior: contain;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    width: min(94vw, 460px);
+    max-height: min(90vh, 720px);
+    padding: 16px;
+  }
+
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal-box {
+    border-radius: 16px 16px 0 0;
+  }
+
+  #main.app-layout-container {
+    height: 100%;
+    padding-bottom: var(--mobile-bottom-bar);
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .show-on-mobile {
+    display: block !important;
+  }
+
+  #primary-side-bar,
+  #secondary-side-bar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: min(86vw, 360px);
+    background: #1a1a1a;
+    z-index: 80;
+    transition:
+      transform 220ms ease,
+      opacity 220ms ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #primary-side-bar {
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  #secondary-side-bar {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  #primary-side-bar.mobile-sidebar-open,
+  #secondary-side-bar.mobile-sidebar-open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .secondary-side-bar .secondary-pane {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #activity-bar-wrapper,
+  #action-bar-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--mobile-bottom-bar) + 8px);
+    width: 100%;
+    height: auto;
+    padding: 0 8px;
+    z-index: 85;
+    background: transparent;
+  }
+
+  #activity-bar-wrapper .activity-bar,
+  #action-bar-wrapper .action-bar {
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(20, 20, 20, 0.9);
+    backdrop-filter: blur(12px);
+  }
+}
+
+@media (max-width: 480px) {
+  #primary-side-bar,
+  #secondary-side-bar {
+    width: 100vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+.ai-locked-range {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    color-mix(in srgb, var(--accent) 5%, transparent)
+  );
+  box-shadow: inset 0 -1px color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 3px;
+  cursor: not-allowed;
+}
+
+.rm-slide-page .rm-slide-hatch-block {
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.08) 0,
+    rgba(0, 0, 0, 0.08) 6px,
+    rgba(255, 255, 255, 0.04) 6px,
+    rgba(255, 255, 255, 0.04) 12px
+  );
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+}
+
+.dark .rm-slide-page .rm-slide-hatch-block {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0,
+    rgba(255, 255, 255, 0.06) 6px,
+    rgba(0, 0, 0, 0.2) 6px,
+    rgba(0, 0, 0, 0.2) 12px
+  );
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* code {
+  font-weight: 600;
+  padding: 3px 5px;
+  border-radius: 2px;
+  background-color: var(--color-background-mute);
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
+  font-size: 85%;
+}
+
+.active{
+  display: block !important;
+} */
+
+/* ===========================================================================
+   WPS Office window chrome
+   The title bar and file-tab band always render on a dark band (like WPS),
+   even though the document canvas itself stays light. We scope a few daisyUI
+   color tokens locally so existing buttons flip to light-on-dark automatically
+   without touching every child component.
+   =========================================================================== */
+.wps-titlebar-chrome {
+  /* WPS command/chrome band (--chrome) above the white ribbon */
+  background-color: var(--chrome);
+  border-bottom: 1px solid var(--line);
+}
+
+.wps-tabband-chrome {
+  /* WPS document tab band (--tabbar): grey band, white active tab */
+  background-color: var(--tabbar);
+}
+
+/* WPS "Buy Now" pill (top-right of the title bar) */
+.wps-buy-now {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--accent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition:
+    filter 120ms ease,
+    transform 120ms ease;
+}
+.wps-buy-now:hover {
+  filter: brightness(1.06);
+}
+.wps-buy-now:active {
+  transform: scale(0.97);
+}
+
+/* WPS "Sign In" text button in the dark chrome */
+.wps-signin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 120ms ease;
+}
+
+/* WPS guest-mode banner (shown above the grid/document when not signed in) */
+.wps-guest-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 34px;
+  font-size: 12.5px;
+  color: #7a5b00;
+  background: #fff8e1;
+  border-bottom: 1px solid #f3e2a9;
+}
+.wps-guest-banner .wps-guest-cta {
+  color: var(--accent);
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.wps-guest-banner .wps-guest-cta:hover {
+  text-decoration: underline;
+}
+
+/* ===========================================================================
+   Re-theme the legacy "editor-*" ribbon panels (Layout / Review / View /
+   References / Form / Design / Transitions / Animations / Table ...). Their
+   scoped styles were hardcoded for dark mode (white text, navy inputs), which
+   left labels invisible and number inputs as dark boxes in the light theme.
+   Global !important overrides win over the components' scoped non-important
+   rules, fixing them all at once.
+   =========================================================================== */
+.editor-ribbon,
+.editor-layout,
+.editor-review {
+  color: var(--text);
+}
+/* Keep each group's tools on a single row (no vertical stacking) and stop the
+   items from shrinking below their content width (which made labels collide).
+   The ribbon row itself scrolls horizontally when a tab has many tools. */
+.editor-group-body {
+  flex-wrap: nowrap !important;
+}
+.editor-item {
+  flex-shrink: 0 !important;
+}
+.editor-group-label,
+.editor-page-meta,
+.editor-timing {
+  color: var(--muted) !important;
+}
+.editor-page-meta strong {
+  color: var(--text) !important;
+}
+.editor-margins-row {
+  color: var(--text) !important;
+}
+.editor-separator {
+  background: var(--line2) !important;
+}
+.editor-margins-row input,
+.editor-size-input {
+  background: var(--field) !important;
+  color: var(--text) !important;
+  border-color: var(--fieldline) !important;
+}
+
+/* ===========================================================================
+   High-Fidelity PDF Print: hide all UI chrome and expose only the document.
+   The main process calls event.sender.printToPDF() on the live renderer window,
+   so @media print is the only mechanism needed — no HTML serialization.
+   =========================================================================== */
+@media print {
+  /* ── 1. Hide all application shell chrome ── */
+  .app-component-no-print,
+  #title-bar,
+  #status-bar,
+  .navigation-tablist-wrapper,
+  .wps-titlebar-chrome,
+  .wps-tabband-chrome,
+  .wps-guest-banner,
+  .editor-ribbon,
+  .editor-layout,
+  .editor-review,
+  #primary-side-bar,
+  #secondary-side-bar,
+  #activity-bar-wrapper,
+  #action-bar-wrapper,
+  .drag-handle-ui,
+  .custom-drag-handle-ui,
+  #bubble-menu-widget,
+  .floating-menu,
+  .bubble-menu,
+  .paste-options-popover,
+  .ProseMirror-widget,
+  .ProseMirror-gapcursor,
+  .ProseMirror-trailingBreak,
+  .collaboration-cursor__caret,
+  .collaboration-cursor__label,
+  .lt-error-underline,
+  [data-no-print],
+  #grammar-suggestion-widget,
+  #word-comment-gutter-widget,
+  .rm-pagination-gap {
+    display: none !important;
+  }
+
+  /* ── 2. Reset root so the document fills the page ── */
+  html,
+  body,
+  #app-body-wrapper,
+  #app-body,
+  #main {
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  /* ── 3. Remove the layout wrapper constraints ── */
+  .app-layout-container {
+    margin-top: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* ── 4. Make the editor and content visible and flow naturally ── */
+  .editor-shell,
+  .editor-stage,
+  .editor-container,
+  .editor-content,
+  .tiptap-content,
+  .ProseMirror,
+  .tiptap {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  /* ── 5. Colour fidelity: preserve all backgrounds and colours ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ── 6. Page break signals from the tiptap pagination plugin ── */
+  .rm-page-break {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+}

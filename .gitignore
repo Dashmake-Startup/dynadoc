@@ -1,0 +1,81 @@
+# Dependencies
+node_modules*
+
+# Build output
+dist
+out
+web/dist
+*.tsbuildinfo
+
+# Environment files. Only .env.example belongs in git, and it must contain
+# variable names with empty or non-sensitive values — never a real value.
+.env
+.env.*
+!.env.example
+
+# Secrets, keys, certificates — never commit any of these.
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+*.crt
+*.cer
+id_rsa*
+*.asc
+*.gpg
+
+# Compiled binaries and archives. Third-party runtimes are fetched at build
+# time, not committed. resources/bin/ is where they land.
+resources/bin/
+resources/jre
+resources/zulu*
+*.exe
+*.dll
+*.so
+*.dylib
+*.node
+*.jar
+*.class
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.AppImage
+*.msi
+**/bin/DocxToHtml/bin/**
+**/bin/DocxToHtml/obj/**
+**/bin/DocxToHtml/publish/**
+android/gradle/wrapper/gradle-wrapper.jar
+
+# Logs and local databases
+*.log*
+*.sqlite
+*.sqlite3
+*.db
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Dead-code naming conventions used while refactoring.
+# Note: do not add a bare `*DELETE*` pattern here. Git matches ignore rules
+# case-insensitively on macOS and Windows, so it would also swallow every
+# legitimate file whose name contains "delete" — including source files and
+# icon assets — with no warning at all.
+**/* copy*
+
+# Agent and tooling scratch directories
+.claude/
+ANTIGRAVITY.md

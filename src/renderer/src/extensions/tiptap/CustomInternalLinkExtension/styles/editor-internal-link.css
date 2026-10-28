@@ -1,0 +1,105 @@
+/**
+ * editor-internal-link.css
+ *
+ * Global styles for `.dynadoc-internal-link` — the inline mark rendered
+ * by CustomInternalLinkExtension inside the Tiptap editor DOM.
+ *
+ * Import this once in your editor's global CSS entry point, e.g.:
+ *   @import './extensions/tiptap/CustomInternalLinkExtension/styles/editor-internal-link.css';
+ *
+ * Design: Adobe Spectrum-inspired, adapts to light/dark via CSS custom props.
+ */
+
+/* ── Core inline mark ────────────────────────────────────────────────────────── */
+
+.dynadoc-internal-link {
+  /* Color tokens — override per theme if needed */
+  --il-color:       hsl(220 80% 65%);
+  --il-color-hover: hsl(220 80% 75%);
+  --il-bg:          hsl(220 80% 60% / 0.1);
+  --il-bg-hover:    hsl(220 80% 60% / 0.2);
+  --il-border:      hsl(220 80% 60% / 0.35);
+
+  color: var(--il-color);
+  background: var(--il-bg);
+  border-bottom: 1.5px solid var(--il-border);
+  border-radius: 3px;
+  padding: 0 3px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+  /* Prevent the mark from breaking across lines awkwardly */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.dynadoc-internal-link:hover {
+  color: var(--il-color-hover);
+  background: var(--il-bg-hover);
+  border-color: var(--il-color-hover);
+}
+
+/* Active / focused state (keyboard navigation) */
+.dynadoc-internal-link:focus-visible {
+  outline: 2px solid var(--il-color);
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+
+/* Broken / unresolved link (no valid fileId) */
+.dynadoc-internal-link[data-file-id=""],
+.dynadoc-internal-link:not([data-file-id]) {
+  --il-color:  hsl(0 60% 62%);
+  --il-bg:     hsl(0 60% 60% / 0.08);
+  --il-border: hsl(0 60% 60% / 0.30);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* ── Leading wiki-link icon (::before) ───────────────────────────────────────── */
+
+/*
+ * If Phosphor CSS icon font is available, inject a link icon glyph before
+ * every internal link for visual distinction. Remove this block if you render
+ * the icon via another mechanism.
+ */
+.dynadoc-internal-link::before {
+  /* ph-link-simple glyph via CSS — Phosphor font must be loaded globally */
+  font-family: 'Phosphor', sans-serif;
+  content: '\e6a1'; /* ph-link-simple unicode — verify against your Phosphor version */
+  font-size: 0.8em;
+  margin-right: 3px;
+  opacity: 0.6;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* ── Selection within a link ─────────────────────────────────────────────────── */
+
+.dynadoc-internal-link::selection,
+.dynadoc-internal-link *::selection {
+  background: hsl(220 80% 65% / 0.3);
+}
+
+/* ── Light-mode overrides ────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: light) {
+  .dynadoc-internal-link {
+    --il-color:       hsl(220 75% 45%);
+    --il-color-hover: hsl(220 75% 35%);
+    --il-bg:          hsl(220 75% 50% / 0.08);
+    --il-bg-hover:    hsl(220 75% 50% / 0.16);
+    --il-border:      hsl(220 75% 50% / 0.30);
+  }
+
+  .dynadoc-internal-link[data-file-id=""],
+  .dynadoc-internal-link:not([data-file-id]) {
+    --il-color:  hsl(0 60% 48%);
+    --il-bg:     hsl(0 60% 55% / 0.07);
+    --il-border: hsl(0 60% 55% / 0.25);
+  }
+}

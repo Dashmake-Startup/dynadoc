@@ -1,0 +1,97 @@
+.luckysheet-cell-input {
+    color: black;
+    /* color: initial; */
+}
+
+.fortune-container {
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+/* Fortune Sheet Theme Adaptations */
+
+/* 1. Context Menu Improvements */
+:global(.fortune-context-menu) {
+    background-color: var(--theme-popover-bg, #fff) !important;
+    color: var(--theme-text-1, #000) !important;
+    border: 1px solid var(--theme-border-subtle, #ddd) !important;
+    box-shadow: var(--theme-popover-shadow, 0 4px 12px rgba(0,0,0,0.15)) !important;
+    border-radius: 8px !important;
+    padding: 6px !important;
+    font-family: inherit !important;
+    min-width: 180px !important;
+    z-index: 10000 !important;
+}
+
+:global(.fortune-context-menu-item) {
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    color: var(--theme-text-1) !important;
+}
+
+:global(.fortune-context-menu-item:hover) {
+    background-color: var(--theme-elevated, #00beac) !important;
+    color: var(--theme-elevated-text, #fff) !important;
+}
+
+:global(.fortune-context-menu-divider) {
+    background-color: var(--theme-border-subtle, #eee) !important;
+    margin: 6px 4px !important;
+    height: 1px !important;
+}
+
+/* 2. Grid Theme Support */
+
+/* Dark Theme Overrides */
+.fortune-theme-dark :global(.fortune-workarea) {
+    background-color: #1e1e1e !important;
+}
+
+.fortune-theme-dark :global(.fortune-sheet-area) {
+    background-color: #1e1e1e !important;
+}
+
+.fortune-theme-dark :global(.fortune-grid-canvas) {
+    /* Filters can be used as a shortcut for complex canvas-based components */
+    /* filter: invert(0.9) hue-rotate(180deg); */
+}
+
+/* 3. Scrollbar Styling */
+.fortune-theme-dark :global(.fortune-scrollbar-ltr::-webkit-scrollbar),
+.fortune-theme-dark :global(.fortune-scrollbar-ltr *::-webkit-scrollbar) {
+    width: 10px;
+    height: 10px;
+}
+
+.fortune-theme-dark :global(.fortune-scrollbar-ltr::-webkit-scrollbar-track) {
+    background: #1e1e1e;
+}
+
+.fortune-theme-dark :global(.fortune-scrollbar-ltr::-webkit-scrollbar-thumb) {
+    background: #444;
+    border-radius: 5px;
+    border: 2px solid #1e1e1e;
+}
+
+.fortune-theme-dark :global(.fortune-scrollbar-ltr::-webkit-scrollbar-thumb:hover) {
+    background: #555;
+}
+
+/* 4. Input handling */
+.fortune-theme-dark :global(.fortune-cell-input) {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+/* 5. Tooltip/Toolbar bits if any are shown */
+:global(.fortune-tooltip) {
+    background-color: var(--theme-popover-bg) !important;
+    color: var(--theme-text-1) !important;
+    border-color: var(--theme-border-subtle) !important;
+}

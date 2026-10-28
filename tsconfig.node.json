@@ -1,0 +1,45 @@
+// {
+//   "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+//   "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*"],
+//   "compilerOptions": {
+//     "composite": true,
+//     "types": ["electron-vite/node"]
+//   }
+// }
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": [
+    "electron.vite.config.*",
+    "src/main/**/*",
+    "src/preload/**/*",
+    "src/*.d.ts"
+  ],
+  "exclude": [
+    "**/* copy*",
+    "**/* copy *.ts",
+    "**/*DELETE*",
+    "**/*DELET*",
+    "src/main/browser copy",
+    "src/preload/delete"
+  ],
+  "compilerOptions": {
+    // "composite": false,
+    "composite": true,
+    "moduleResolution": "bundler", // or "nodenext",
+    "noEmitOnError": false, // allow build even if errors
+    "module": "esnext",
+    "target": "esnext",
+    "types": [
+      "node"
+    ],
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // Base @electron-toolkit/tsconfig sets noUnusedLocals: true which produces TS6133
+    // noise on dead-code variables in the 6k-LOC src/main/index.ts. Disabled here
+    // until SPEC-001 removes the dead code. Side-effect: unused vars in active code
+    // are also silenced — acceptable trade-off until the file is sanitised.
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}

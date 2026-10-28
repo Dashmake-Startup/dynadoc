@@ -1,0 +1,79 @@
+/**
+ * Copyright (C) 2024 Dashmake Inc.
+ *
+ * This file is part of DDoc Office.
+ *
+ * DDoc Office is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * DDoc Office is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with DDoc Office.  If not, see <https://www.gnu.org/licenses/>.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pagination rendering optimization */
+.rm-page-break .page {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 1000px;
+  will-change: transform;
+}
+
+.custom-page-break-wrapper {
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+.page-background {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  z-index: -30;
+  top: 0;
+}
+
+.rm-manual-page-break {
+  display: block;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(125, 125, 125, 0.08),
+    rgba(125, 125, 125, 0.18),
+    rgba(125, 125, 125, 0.08)
+  );
+  border-top: 1px dashed rgba(125, 125, 125, 0.4);
+  border-bottom: 1px dashed rgba(125, 125, 125, 0.25);
+  margin: 4px 0;
+}
+
+.rm-manual-page-break-page::after,
+.rm-manual-page-break-section::after,
+.rm-manual-page-break-blank::after {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(125, 125, 125, 0.6);
+  padding: 4px 8px;
+}
+
+.rm-manual-page-break-page::after {
+  content: 'Page Break';
+}
+
+.rm-manual-page-break-section::after {
+  content: 'Section Break';
+}
+
+.rm-manual-page-break-blank::after {
+  content: 'Blank Page';
+}

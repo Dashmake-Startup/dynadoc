@@ -1,0 +1,23 @@
+{
+  "name": "fontpicker",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "tsc": "tsc --pretty",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier -w src"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "esbuild": "^0.25.5",
+    "events": "^3.3.0",
+    "leven": "^4.0.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.2.3"
+  }
+}

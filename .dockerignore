@@ -1,0 +1,34 @@
+# Keep the build context small and reproducible: node_modules alone is ~2.7 GB
+# locally and must come from npm ci inside the image, never from the host.
+node_modules
+**/node_modules
+
+# Build outputs
+out
+dist
+web/dist
+build/*.blockmap
+release
+
+# VCS & tooling
+.git
+.github
+.vscode
+.idea
+
+# Local env files must never end up in an image layer
+.env
+.env.*
+
+# Desktop-only artefacts
+resources/bin
+*.dmg
+*.exe
+*.AppImage
+*.snap
+
+# Noise
+*.log
+.DS_Store
+coverage
+.claude

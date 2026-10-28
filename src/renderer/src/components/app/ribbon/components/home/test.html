@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ribbon Clone — UnoCSS + daisyUI</title>
+
+  <!-- Tailwind CSS (CDN runtime) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- daisyUI (CDN plugin for Tailwind) -->
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      plugins: [daisyui],
+      daisyui: {
+        themes: ["light", "dark", "corporate", "emerald"],
+      },
+    }
+  </script>
+
+  <!-- UnoCSS runtime (attributify + presetUno) -->
+  <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js"></script>
+  <script>
+    // Enable attributify and icons if needed
+    // UnoCSS runtime auto-scans attributes and class utilities
+  </script>
+
+  <style>
+    /* Slight polish for a Word-like feel */
+    .ribbon {
+      backdrop-filter: saturate(1.2) blur(0px);
+    }
+    .ribbon .group {
+      min-width: 190px;
+    }
+    .ribbon .group .group-title {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      color: #6b7280; /* gray-500 */
+      text-transform: uppercase;
+    }
+    /* Focus ring for keyboard navigation */
+    .kb-focus:focus-visible {
+      outline: 2px solid var(--bg-primary);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    /* Content area mimicking a document sheet */
+    .doc-sheet {
+      background: conic-gradient(at 10% 10%, #fff 0 25%, #fafafa 0 50%, #fff 0 75%, #fafafa 0 100%);
+    }
+  </style>
+</head>
+<body class="bg-base-200">
+
+  <!-- App shell -->
+  <div class="min-h-screen flex flex-col">
+
+    <!-- Top App Bar -->
+    <header class="navbar bg-base-100 border-b border-base-200 px-4 sticky top-0 z-50">
+      <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl kb-focus" href="#">DocServer</a>
+      </div>
+      <div class="flex-none gap-2">
+        <!-- Theme switch -->
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost kb-focus" aria-label="Theme toggle">
+            Theme
+          </label>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a data-theme-select="light">Light</a></li>
+            <li><a data-theme-select="dark">Dark</a></li>
+            <li><a data-theme-select="corporate">Corporate</a></li>
+            <li><a data-theme-select="emerald">Emerald</a></li>
+          </ul>
+        </div>
+        <!-- Account -->
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost kb-focus">Account</label>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-56">
+            <li><a>Profile</a></li>
+            <li><a>Licenses</a></li>
+            <li><a>Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Ribbon Tabs -->
+    <div class="bg-base-100 border-b border-base-200 ribbon">
+      <div class="tabs px-4">
+        <a class="tab tab-bordered tab-active kb-focus" data-tab="home" role="tab" aria-selected="true">Home</a>
+        <a class="tab tab-bordered kb-focus" data-tab="insert" role="tab">Insert</a>
+        <a class="tab tab-bordered kb-focus" data-tab="layout" role="tab">Layout</a>
+        <a class="tab tab-bordered kb-focus" data-tab="review" role="tab">Review</a>
+        <a class="tab tab-bordered kb-focus" data-tab="view" role="tab">View</a>
+      </div>
+
+      <!-- Ribbon Content -->
+      <div class="px-4 py-3 flex flex-wrap gap-4">
+
+        <!-- Home -->
+        <section class="ribbon-pane flex flex-wrap gap-4" data-pane="home">
+          <!-- Clipboard -->
+          <div class="group">
+            <div class="group-title mb-2">Clipboard</div>
+            <div class="flex gap-2">
+              <button class="btn btn-primary kb-focus" title="Paste (Ctrl+V)">Paste</button>
+              <div class="btn-group">
+                <button class="btn kb-focus" title="Cut (Ctrl+X)">Cut</button>
+                <button class="btn kb-focus" title="Copy (Ctrl+C)">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Font -->
+          <div class="group">
+            <div class="group-title mb-2">Font</div>
+            <div class="flex items-center gap-2">
+              <select class="select select-bordered kb-focus w-36" aria-label="Font family">
+                <option>Calibri</option>
+                <option>Times New Roman</option>
+                <option>Inter</option>
+                <option>Source Sans</option>
+              </select>
+              <select class="select select-bordered kb-focus w-24" aria-label="Font size">
+                <option>11</option>
+                <option>12</option>
+                <option>14</option>
+                <option>18</option>
+              </select>
+            </div>
+            <div class="mt-2 btn-group">
+              <button class="btn kb-focus" aria-label="Bold">B</button>
+              <button class="btn kb-focus" aria-label="Italic">I</button>
+              <button class="btn kb-focus" aria-label="Underline">U</button>
+              <button class="btn kb-focus" aria-label="Strikethrough">S</button>
+            </div>
+          </div>
+
+          <!-- Paragraph -->
+          <div class="group">
+            <div class="group-title mb-2">Paragraph</div>
+            <div class="btn-group">
+              <button class="btn kb-focus" aria-label="Align left">↤</button>
+              <button class="btn kb-focus" aria-label="Align center">↔</button>
+              <button class="btn kb-focus" aria-label="Align right">↦</button>
+              <button class="btn kb-focus" aria-label="Justify">≡</button>
+            </div>
+            <div class="mt-2 btn-group">
+              <button class="btn kb-focus" aria-label="Bulleted list">• • •</button>
+              <button class="btn kb-focus" aria-label="Numbered list">1 2 3</button>
+            </div>
+          </div>
+
+          <!-- Styles -->
+          <div class="group">
+            <div class="group-title mb-2">Styles</div>
+            <div class="flex gap-2">
+              <button class="btn kb-focus">Normal</button>
+              <button class="btn kb-focus">Heading 1</button>
+              <button class="btn kb-focus">Heading 2</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Insert -->
+        <section class="ribbon-pane hidden flex flex-wrap gap-4" data-pane="insert">
+          <div class="group">
+            <div class="group-title mb-2">Media</div>
+            <div class="btn-group">
+              <button class="btn kb-focus">Picture</button>
+              <button class="btn kb-focus">SVG</button>
+              <button class="btn kb-focus">Icon</button>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group-title mb-2">Tables</div>
+            <button class="btn kb-focus">Insert Table</button>
+          </div>
+          <div class="group">
+            <div class="group-title mb-2">Links</div>
+            <button class="btn kb-focus">Insert Link</button>
+          </div>
+        </section>
+
+        <!-- Layout -->
+        <section class="ribbon-pane hidden flex flex-wrap gap-4" data-pane="layout">
+          <div class="group">
+            <div class="group-title mb-2">Margins</div>
+            <div class="dropdown">
+              <label tabindex="0" class="btn kb-focus">Margins</label>
+              <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a>Normal</a></li>
+                <li><a>Narrow</a></li>
+                <li><a>Wide</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group-title mb-2">Orientation</div>
+            <div class="btn-group">
+              <button class="btn kb-focus">Portrait</button>
+              <button class="btn kb-focus">Landscape</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Review -->
+        <section class="ribbon-pane hidden flex flex-wrap gap-4" data-pane="review">
+          <div class="group">
+            <div class="group-title mb-2">Proofing</div>
+            <button class="btn kb-focus">Spelling & Grammar</button>
+          </div>
+          <div class="group">
+            <div class="group-title mb-2">Comments</div>
+            <button class="btn kb-focus">New Comment</button>
+            <button class="btn kb-focus">Delete</button>
+          </div>
+        </section>
+
+        <!-- View -->
+        <section class="ribbon-pane hidden flex flex-wrap gap-4" data-pane="view">
+          <div class="group">
+            <div class="group-title mb-2">Zoom</div>
+            <div class="btn-group">
+              <button class="btn kb-focus">100%</button>
+              <button class="btn kb-focus">Page Width</button>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group-title mb-2">Mode</div>
+            <div class="btn-group">
+              <button class="btn kb-focus">Print Layout</button>
+              <button class="btn kb-focus">Web</button>
+              <button class="btn kb-focus">Read</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Document area -->
+    <main class="flex-1 p-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="doc-sheet shadow bg-base-100 rounded-lg p-8 min-h-[60vh]">
+          <h1 class="text-2xl font-semibold mb-4">Untitled Document</h1>
+          <p class="text-base-content/80">
+            Type here… This area simulates a document editor surface. Hook ribbon actions to your editor API.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer footer-center p-4 bg-base-100 text-base-content border-t border-base-200">
+      <aside>
+        <p>Ribbon clone · UnoCSS + daisyUI</p>
+      </aside>
+    </footer>
+  </div>
+
+  <!-- Behavior: tab switching, theme, keyboard shortcuts -->
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tabs .tab')
+    const panes = document.querySelectorAll('.ribbon-pane')
+    function activateTab(name) {
+      tabs.forEach(t => {
+        const isActive = t.dataset.tab === name
+        t.classList.toggle('tab-active', isActive)
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false')
+      })
+      panes.forEach(p => {
+        const visible = p.dataset.pane === name
+        p.classList.toggle('hidden', !visible)
+      })
+    }
+    tabs.forEach(t => t.addEventListener('click', () => activateTab(t.dataset.tab)))
+    activateTab('home')
+
+    // Theme switch
+    document.querySelectorAll('[data-theme-select]').forEach(el => {
+      el.addEventListener('click', () => {
+        const theme = el.getAttribute('data-theme-select')
+        document.documentElement.setAttribute('data-theme', theme)
+      })
+    })
+
+    // Keyboard shortcuts (example)
+    // Ctrl+B, Ctrl+I, Ctrl+U to toggle active states on Font buttons
+    const keyMap = {
+      'Ctrl+B': () => toggleButtonByLabel('Bold'),
+      'Ctrl+I': () => toggleButtonByLabel('Italic'),
+      'Ctrl+U': () => toggleButtonByLabel('Underline'),
+    }
+    function normalizeKey(e) {
+      const parts = []
+      if (e.ctrlKey || e.metaKey) parts.push('Ctrl')
+      if (e.shiftKey) parts.push('Shift')
+      if (e.altKey) parts.push('Alt')
+      parts.push(e.key.toUpperCase())
+      return parts.join('+')
+    }
+    function toggleButtonByLabel(ariaLabel) {
+      const btn = Array.from(document.querySelectorAll('.group .btn'))
+        .find(b => b.getAttribute('aria-label') === ariaLabel)
+      if (btn) btn.classList.toggle('btn-active')
+    }
+    window.addEventListener('keydown', (e) => {
+      const k = normalizeKey(e)
+      if (keyMap[k]) { e.preventDefault(); keyMap[k]() }
+    })
+  </script>
+</body>
+</html>

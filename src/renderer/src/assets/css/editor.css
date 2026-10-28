@@ -1,0 +1,1264 @@
+/**
+ * Copyright (C) 2024 Dashmake Inc.
+ * 
+ * This file is part of DDoc Office.
+ * 
+ * DDoc Office is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * DDoc Office is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DDoc Office.  If not, see <https://www.gnu.org/licenses/>.
+ */
+/* 
+ body {
+   background-color: #222;
+   color: #ddd;
+   font-family: helvetica;
+ }
+
+ a {
+   margin: 40px;
+   display: inline-block;
+   color: white;
+   color: grey;
+   text-decoration: none;
+   font-family: Helvetica;
+   font-size: 2em;
+   font-weight: lighter;
+   vertical-align: top;
+   transition: color 0.2s ease;
+ }
+
+ p {
+   line-height: 1.4em;
+   font-weight: lighter;
+   font-size: 1.5em;
+ }
+
+ p a {
+   margin: 0;
+   font-size: 1em;
+ } */
+
+/* General List Reset */
+.tiptap ol,
+.tiptap ul {
+  margin: 1rem 0;
+  padding-left: 2rem;
+  list-style: none;
+}
+
+/* MS Office Alignment: Flexbox is best for custom counters/bullets */
+.tiptap li {
+  display: flex !important;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+  color: inherit;
+}
+
+.tiptap .li-marker {
+  color: var(--list-marker-color, currentColor);
+  font-size: var(--list-marker-size, 1em);
+  font-weight: var(--list-marker-weight, inherit);
+  font-family: var(--list-marker-font, inherit);
+  font-style: var(--list-marker-style, normal);
+  text-decoration: var(--list-marker-decoration, none);
+  background-color: var(--list-marker-bg, transparent);
+  box-shadow: var(--list-marker-shadow, none);
+  text-transform: var(--list-marker-transform, none);
+  min-width: 2.2rem;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+  line-height: 1.2;
+  padding-top: 0.05em;
+  transition: all 0.2s ease;
+  cursor: text;
+}
+
+.tiptap .li-marker::before {
+  min-width: 1.5rem;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+/* Marker selection highlight for list-wide selection */
+.tiptap .list-markers-selected .li-marker {
+  background-color: #b4d5ff;
+  border-radius: 3px;
+}
+
+.tiptap .orderedList-selected .li-marker,
+.tiptap .bulletList-selected .li-marker {
+  background-color: #b4d5ff;
+  border-radius: 3px;
+}
+
+.tiptap .ms-office-li[data-match-content='true'] .li-marker {
+  font-weight: inherit !important;
+  font-style: inherit !important;
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
+.tiptap ::selection,
+.tiptap .selection {
+  background-color: rgba(5, 56, 124, 0.3);
+}
+
+/* Inside list marker should not use flex layout */
+.tiptap [data-list-position='inside'] > li {
+  display: block !important;
+}
+
+.tiptap [data-list-position='inside'] > li .li-marker::before {
+  min-width: 0;
+  margin-right: 0.35rem;
+}
+
+/* Ensure child content (H1, P, etc) takes remaining space */
+.tiptap li > div,
+.tiptap li > h1,
+.tiptap li > h2,
+.tiptap li > h3,
+.tiptap li > p {
+  flex: 1;
+  margin: 0 !important;
+  /* Removes H1 padding that breaks list alignment */
+}
+
+.tiptap .li-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- LIST COUNTERS (CUSTOM MARKERS) --- */
+.tiptap ol {
+  counter-reset: ol-1 calc(var(--list-start, 1) - 1);
+}
+
+.tiptap ol > li {
+  counter-increment: ol-1;
+}
+
+.tiptap ol > li .li-marker::before {
+  content: counter(ol-1) '. ';
+}
+
+.tiptap ol[data-list-style='upper-alpha'] > li .li-marker::before {
+  content: counter(ol-1, upper-alpha) '. ';
+}
+
+.tiptap ol[data-list-style='lower-alpha'] > li .li-marker::before {
+  content: counter(ol-1, lower-alpha) '. ';
+}
+
+.tiptap ol[data-list-style='upper-roman'] > li .li-marker::before {
+  content: counter(ol-1, upper-roman) '. ';
+}
+
+.tiptap ol[data-list-style='lower-roman'] > li .li-marker::before {
+  content: counter(ol-1, lower-roman) '. ';
+}
+
+.tiptap ol[data-list-style='decimal-leading-zero'] > li .li-marker::before {
+  content: counter(ol-1, decimal-leading-zero) '. ';
+}
+
+.tiptap ol ol {
+  counter-reset: ol-2;
+}
+
+.tiptap ol ol > li {
+  counter-increment: ol-2;
+}
+
+.tiptap ol ol > li .li-marker::before {
+  content: counter(ol-2) '. ';
+}
+
+.tiptap ol ol ol {
+  counter-reset: ol-3;
+}
+
+.tiptap ol ol ol > li {
+  counter-increment: ol-3;
+}
+
+.tiptap ol ol ol > li .li-marker::before {
+  content: counter(ol-3) '. ';
+}
+
+.tiptap ul > li .li-marker::before {
+  content: '• ';
+}
+
+.tiptap ul[data-list-style='disc'] > li .li-marker::before {
+  content: '• ';
+}
+
+.tiptap ul[data-list-style='circle'] > li .li-marker::before {
+  content: '◦ ';
+}
+
+.tiptap ul[data-list-style='square'] > li .li-marker::before {
+  content: '▪ ';
+}
+
+.tiptap ul[data-list-style='dash'] > li .li-marker::before {
+  content: '– ';
+}
+
+/* Match content styling (heading-sized markers) */
+.tiptap li[data-match-content='true'] {
+  --list-marker-color: currentColor;
+  --list-marker-weight: inherit;
+  --list-marker-size: 1em;
+}
+
+.tiptap li[data-match-content='true']:has(> h1) {
+  --list-marker-size: 2em;
+  --list-marker-weight: 700;
+}
+
+.tiptap li[data-match-content='true']:has(> h2) {
+  --list-marker-size: 1.6em;
+  --list-marker-weight: 700;
+}
+
+.tiptap li[data-match-content='true']:has(> h3) {
+  --list-marker-size: 1.4em;
+  --list-marker-weight: 600;
+}
+
+.tiptap li[data-match-content='true']:has(> h4) {
+  --list-marker-size: 1.2em;
+  --list-marker-weight: 600;
+}
+
+.tiptap li[data-match-content='true']:has(> h5) {
+  --list-marker-size: 1.1em;
+  --list-marker-weight: 600;
+}
+
+.tiptap li[data-match-content='true']:has(> h6) {
+  --list-marker-size: 1em;
+  --list-marker-weight: 600;
+}
+
+.tiptap li[data-match-content='true']:has(> p) {
+  --list-marker-size: 1em;
+  --list-marker-weight: inherit;
+}
+
+/* Container Layout */
+.ms-office-li {
+  display: flex !important;
+  align-items: flex-start;
+  list-style: none !important;
+  /* Ensure the li is the anchor for the selection highlight */
+  position: relative;
+}
+
+.li-marker {
+  display: inline-flex;
+  justify-content: flex-end;
+  /* Use a consistent width but allow it to grow for legal numbering (1.1.1) */
+  min-width: 2.2rem;
+  margin-right: 0.6rem;
+  padding: 0 2px;
+  /* Slight horizontal padding for the selection background */
+
+  /* The "Pro" cursor - looks like you can select it as text */
+  cursor: text;
+  user-select: none;
+
+  /* Transitions make the selection feel smooth, like a native app */
+  transition: background-color 0.1s ease-in-out;
+
+  color: var(--list-marker-color, inherit);
+  font-size: var(--list-marker-size, inherit);
+  font-weight: var(--list-marker-weight, inherit);
+
+  /* Essential: ensure the marker has a height even if empty to show selection */
+  min-height: 1.2em;
+  line-height: inherit;
+}
+
+/** * PRO SELECTION STYLE
+ * In MS Word/Google Docs, a selected list marker uses the system selection color.
+ * We remove the 'outline' and use a solid background that mimics text selection.
+ */
+.ProseMirror-selectednode.ms-office-li .li-marker {
+  /* This hex #B4D5FF is the classic Windows/Office selection blue */
+  /* For MacOS style, use #ACCEF7 */
+  background-color: #b4d5ff;
+
+  /* We do NOT use outline. Pro apps use a clean background box. */
+  outline: none;
+  border-radius: 0;
+  /* Text selection is usually sharp-edged */
+
+  /* If the text color is dark, ensure it remains readable against the blue */
+  color: #000;
+}
+
+/* Match Content Logic */
+.ms-office-li[data-match-content='true'] .li-marker {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/**
+ * Handle the "Focus" state
+ * When the editor is blurred, the selection often turns gray in Pro apps.
+ */
+.ProseMirror-focused .ProseMirror-selectednode.ms-office-li .li-marker {
+  background-color: #b4d5ff;
+}
+
+.tiptap:not(.ProseMirror-focused) .ProseMirror-selectednode.ms-office-li .li-marker {
+  background-color: #d3d3d3;
+  /* Gray selection when app is out of focus */
+}
+
+/* The actual numbering content */
+.tiptap ol > .ms-office-li .li-marker::before {
+  content: counter(lvl1) '.';
+  /* Default - link this to your counter logic */
+}
+
+/* --- LEGAL PRESET (1.1, 1.1.1) --- */
+.tiptap ol[data-list-preset='legal'] {
+  list-style-type: none;
+  counter-reset: lvl1 calc(var(--list-start, 1) - 1);
+}
+
+.tiptap ol[data-list-preset='legal'] > li {
+  counter-increment: lvl1;
+}
+
+.tiptap ol[data-list-preset='legal'] > li .li-marker::before {
+  content: counter(lvl1) '. ';
+  color: var(--list-marker-color, currentColor);
+  font-size: var(--list-marker-size, 1em);
+  font-weight: var(--list-marker-weight, 600);
+  min-width: 1.5rem;
+}
+
+.tiptap ol[data-list-preset='legal'] li ol {
+  counter-reset: lvl2;
+  list-style-type: none;
+  padding-left: 1.2rem;
+}
+
+.tiptap ol[data-list-preset='legal'] li ol > li {
+  counter-increment: lvl2;
+}
+
+.tiptap ol[data-list-preset='legal'] li ol > li .li-marker::before {
+  content: counter(lvl1) '.' counter(lvl2) ' ';
+  color: var(--list-marker-color, currentColor);
+  font-size: var(--list-marker-size, 1em);
+  font-weight: var(--list-marker-weight, 600);
+  min-width: 2rem;
+}
+
+/* --- OUTLINE PRESET (I, A, 1, a) --- */
+.tiptap ol[data-list-preset='outline'] {
+  counter-reset: outline-1 calc(var(--list-start, 1) - 1);
+}
+
+.tiptap ol[data-list-preset='outline'] > li {
+  counter-increment: outline-1;
+}
+
+.tiptap ol[data-list-preset='outline'] > li .li-marker::before {
+  content: counter(outline-1, upper-roman) '. ';
+}
+
+.tiptap ol[data-list-preset='outline'] li ol {
+  counter-reset: outline-2;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol > li {
+  counter-increment: outline-2;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol > li .li-marker::before {
+  content: counter(outline-2, upper-alpha) '. ';
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol {
+  counter-reset: outline-3;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol > li {
+  counter-increment: outline-3;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol > li .li-marker::before {
+  content: counter(outline-3, decimal) '. ';
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol li ol {
+  counter-reset: outline-4;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol li ol > li {
+  counter-increment: outline-4;
+}
+
+.tiptap ol[data-list-preset='outline'] li ol li ol li ol > li .li-marker::before {
+  content: counter(outline-4, lower-alpha) '. ';
+}
+
+/* --- TREE BULLET PRESET (disc -> circle -> square -> dash) --- */
+.tiptap ul[data-list-preset='tree'] {
+  list-style-type: disc;
+}
+
+.tiptap ul[data-list-preset='tree'] ul {
+  list-style-type: circle;
+}
+
+.tiptap ul[data-list-preset='tree'] ul ul {
+  list-style-type: square;
+}
+
+.tiptap ul[data-list-preset='tree'] ul ul ul {
+  list-style-type: '– ';
+}
+
+.tiptap ul[data-list-preset='tree'] > li .li-marker::before {
+  content: '• ';
+}
+
+.tiptap ul[data-list-preset='tree'] ul > li .li-marker::before {
+  content: '◦ ';
+}
+
+.tiptap ul[data-list-preset='tree'] ul ul > li .li-marker::before {
+  content: '▪ ';
+}
+
+.tiptap ul[data-list-preset='tree'] ul ul ul > li .li-marker::before {
+  content: '– ';
+}
+
+/* Handle list item numbering for standard browsers (A, B, C) */
+.tiptap li[value] .li-marker::before {
+  /* This ensures that if we set <li value="1">, 
+     the CSS counter (if used) resets, or browser native list handles it */
+  content: none;
+}
+
+/* --- TASK LIST PRESETS --- */
+.tiptap ul[data-type='taskList'] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap ul[data-type='taskList'] li {
+  align-items: center;
+}
+
+.tiptap ul[data-type='taskList'] .li-marker {
+  display: none;
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='toggle'] input[type='checkbox'] {
+  appearance: none;
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  margin-right: 10px;
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='toggle'] input[type='checkbox']::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  transition: transform 0.2s ease;
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='toggle'] input[type='checkbox']:checked {
+  background: linear-gradient(120deg, #2d6cff, #6eb7ff);
+  border-color: rgba(88, 166, 255, 0.8);
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='toggle'] input[type='checkbox']:checked::after {
+  transform: translateX(14px);
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='progress'] li {
+  position: relative;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='progress'] input[type='checkbox'] {
+  margin-right: 10px;
+}
+
+.tiptap ul[data-type='taskList'][data-list-preset='progress'] li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #2d6cff, #6eb7ff);
+  border-radius: 0 0 8px 8px;
+  transition: width 0.2s ease;
+}
+
+.tiptap
+  ul[data-type='taskList'][data-list-preset='progress']
+  li:has(input[type='checkbox']:checked)::after {
+  width: 100%;
+}
+
+/* Table-specific styling */
+.tiptap table tr {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.tiptap table,
+.tiptap table tbody,
+.tiptap table colgroup,
+.pdfs,
+.pdf-preview-containers {
+  width: 100%;
+  display: contents;
+}
+
+.pdf {
+  /* float: left; */
+
+  /* display: block;
+    clear: both;
+    position: relative; */
+  z-index: 5;
+  /* above the page background */
+}
+
+canvas {
+  /* display: block; */
+  /* clear: both; */
+  /* position: static; or relative */
+  /* position: absolute; */
+}
+
+.review-insert {
+  background-color: color-mix(
+    in srgb,
+    var(--review-color, rgba(76, 175, 80, 0.6)) 20%,
+    transparent
+  );
+  border-bottom: 2px solid var(--review-color, rgba(76, 175, 80, 0.6));
+}
+
+.review-delete {
+  text-decoration: line-through;
+  opacity: 0.9;
+  color: color-mix(in srgb, var(--review-color, rgba(231, 76, 60, 0.7)) 60%, #000);
+}
+
+span[data-suggestion='true'] {
+  position: relative;
+}
+
+span[data-suggestion='true']:hover::after {
+  content: attr(data-author) ' · ' attr(data-timestamp-label);
+  position: absolute;
+  left: 0;
+  top: -18px;
+  background: color-mix(in srgb, var(--review-color, rgba(76, 175, 80, 0.6)) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--review-color, rgba(76, 175, 80, 0.6)) 60%, transparent);
+  color: color-mix(in srgb, var(--review-color, rgba(76, 175, 80, 0.6)) 70%, #fff 30%);
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.tiptap table td,
+.tiptap table th {
+  position: relative;
+}
+
+/* .tiptap table{
+    border-collapse: collapse;
+    margin: 0;
+    overflow: hidden;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .tiptap table td, .tiptap table th{
+    border: 1px solid red;
+    box-sizing: border-box;
+    min-width: 1em;
+    padding: 6px 8px;
+    position: relative;
+    vertical-align: top;
+  }
+
+  .tiptap table td > *, .tiptap table th > *{
+    margin-bottom: 0;
+  }
+
+  .tiptap table th{
+    background-color: green;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .tiptap table .selectedCell:after{
+    background: yellow;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .tiptap table .column-resize-handle{
+    background-color: purple;
+    bottom: -2px;
+    pointer-events: none;
+    position: absolute;
+    right: -2px;
+    top: 0;
+    width: 4px;
+  }
+
+  .tiptap .tableWrapper{
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  } */
+
+.tiptap.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+.tiptap button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.monaco-editor-code-block-wrapper,
+.monaco-editor-code-block-container,
+.monaco-editor-code-block-preview-container {
+  /* .monaco-editor-code-block-wrapper, .monaco-editor-code-block-preview-container{ */
+  height: 300px;
+  /* required for Monaco */
+  border: 1px solid #444;
+  border-radius: 6px;
+  margin: 1em 0;
+}
+
+/* Make the caret container relative so label can float */
+
+.comment-widget {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px;
+  background: #fdfdfd;
+}
+
+.comment-widget-label {
+  /* font-size: 0.75rem;
+  font-weight: bold;
+  color: #333;
+  position: absolute;
+  top: -12px;
+  left: 4px;
+  background: #fdfdfd;
+  padding: 0 4px; */
+  position: absolute;
+  bottom: 100%;
+  width: max-content;
+}
+
+.comment-widget-value {
+  margin: 8px 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.comment-widget-uncomment {
+  display: block;
+  border: none;
+  background: #e33;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.comment-widget-uncomment:hover {
+  background: #c00;
+}
+
+.collaboration-carets {
+  position: relative;
+}
+
+/* The colored caret line */
+.collaboration-carets__caret {
+  border-left: 2px solid var(--caret-color, #ff00ff);
+  margin-left: -1px;
+  margin-right: -1px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+/* The username label */
+.collaboration-carets__label {
+  position: absolute;
+  top: -1.5em;
+  /* float above the text */
+  left: 0;
+  transform: translateX(-50%);
+  /* center above caret */
+  padding: 2px 6px;
+  font-size: 12px;
+  background: var(--caret-color, #ff00ff);
+  color: white;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* The username label */
+.dimmed-node {
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.05);
+  opacity: 0.5;
+}
+
+.editor-container {
+  /* padding: 2rem;
+    margin-bottom: 50rem; */
+  /* background: white;
+    color: black; */
+}
+
+.editor {
+  border: 1px solid #ccc;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+/* .section {
+    background-color: red;
+  } */
+
+:root {
+  /* --page-width: 21cm;
+    --page-height: 29.7cm; */
+}
+
+.page {
+  /* @apply bg-white p-[2cm] shadow-md mb-8 mx-auto relative w-[var(--page-width)] min-h-[var(--page-height)]; */
+  box-sizing: border-box;
+  page-break-after: always;
+  overflow: hidden;
+  color: black;
+}
+
+.editor-content,
+.translation-full-editor-container {
+  margin: auto;
+  font-family: initial !important;
+  font-size: initial !important;
+}
+
+/* ponytail: tighter default spacing (was inherited 1.6 line-height + UA 1em
+   paragraph margin, which read as double spacing). The big gaps were the
+   paragraph margins. Needs a full reload (pagination recomputes from scratch);
+   documents that set their own spacing override this. */
+.editor-content p {
+  margin: 0 0 0.3em;
+}
+
+.editor-content .ProseMirror,
+.editor-content .tiptap {
+  line-height: 1.3;
+}
+
+/* ponytail: lists keep their own layout — the tighter default paragraph margin
+   must not bleed into list items (incl. paragraphs nested under .li-content,
+   which the li > p reset above doesn't catch). */
+.editor-content li p {
+  margin: 0 !important;
+}
+
+.editor-container {
+  /* @apply bg-gray-100 min-h-screen p-8 overflow-y-auto; */
+}
+
+.editor-content .tiptap,
+.translation-full-editor-container .tiptap {
+  /* @apply flex flex-col gap-4; */
+  /* background: white; */
+  color: black;
+  /* position: relative; */
+}
+
+#presentation-body-wrapper .tiptap:has(.breaker) > :not(.tiptap-page-break),
+#presenter-view-body-wrapper .tiptap:has(.breaker) > :not(.tiptap-page-break) {
+  position: relative;
+}
+
+.tiptap .nodeview-position {
+  position: relative;
+  display: block;
+  width: 100%;
+  clear: both;
+  margin: 0.75rem 0;
+  --nodeview-offset-x: 0px;
+  --nodeview-offset-y: 0px;
+}
+
+.tiptap .nodeview-position[data-layout='inline'] {
+  width: 100%;
+}
+
+.tiptap .nodeview-position[data-layout='center'] {
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tiptap .nodeview-position[data-layout='full'] {
+  width: 100%;
+}
+
+.tiptap .nodeview-position[data-layout='float-left'] {
+  float: left;
+  width: fit-content;
+  max-width: 60%;
+  margin-right: 1rem;
+}
+
+.tiptap .nodeview-position[data-layout='float-right'] {
+  float: right;
+  width: fit-content;
+  max-width: 60%;
+  margin-left: 1rem;
+}
+
+.tiptap .nodeview-position[data-layout='front'],
+.tiptap .nodeview-position[data-layout='behind'] {
+  position: absolute;
+  left: calc(50% + var(--nodeview-offset-x, 0px));
+  top: var(--nodeview-offset-y, 0px);
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.tiptap .nodeview-position[data-layout='front'] {
+  z-index: 6;
+}
+
+.tiptap .nodeview-position[data-layout='behind'] {
+  z-index: 1;
+}
+
+.editor-content .tiptap:has(.breaker) > :not(.tiptap-page-break) {
+  /* .tiptap:has(.breaker) > :not(.tiptap-page-break){ */
+  /* position: relative; */
+  /* z-index: 0;
+    position: relative; */
+  /* width: 1123px;
+  margin-left: calc(50% - 397px);
+  margin-right: calc(50% - 397px); */
+}
+
+.tiptap,
+.tiptap:focus-visible,
+.ProseMirror,
+.ProseMirror:focus-visible {
+  border: none !important;
+  outline: none !important;
+}
+
+/* body{
+    font-family: 'Calibri' !important;
+    font-size: 10pt !important;
+  } */
+
+/* Custom page tag style */
+page {
+  display: block;
+  width: var(--page-width);
+  min-height: var(--page-height);
+  /* @apply bg-white mx-auto shadow-md p-[2cm]; */
+  box-sizing: border-box;
+  page-break-after: always;
+  overflow: hidden;
+  color: black;
+}
+
+/* Optional ruler */
+.ruler {
+  @apply w-[var(--page-width)] mx-auto h-4 relative mb-2 bg-gray-200 text-xs text-gray-600 flex items-center justify-between px-4 font-mono;
+}
+
+page-break {
+  display: block;
+  content-visibility: auto;
+  /* width: calc(210mm * (96 / 25.4)); or use px */
+  margin: 0 auto;
+  height: 3vh;
+  background-color: green;
+  user-select: none;
+  pointer-events: none;
+}
+
+page-break[orientation='landscape'] {
+  /* rotate container or swap width/height in rendering area */
+}
+
+.page-frame {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  margin-bottom: var(--page-gap, 24px);
+  background: var(--page-bg, white);
+}
+
+/* Visible separation between auto-paginated pages: fill the gap with the
+   canvas grey and let the page edges cast a soft shadow into it, so each page
+   reads as a distinct sheet (Word/WPS style). */
+.rm-with-pagination .rm-pagination-gap {
+  background: var(--bg, #e9eaec) !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+  box-shadow:
+    inset 0 7px 7px -7px rgba(0, 0, 0, 0.22),
+    inset 0 -7px 7px -7px rgba(0, 0, 0, 0.22) !important;
+}
+
+.page-frame .page-content {
+  padding: 1in;
+  /* convert mm to px */
+  column-gap: 2rem;
+}
+
+/* Target the last finalized meeting node in the editor */
+meeting[status='finalized']:last-child {
+  border-right: 3px solid #3b82f6;
+  padding-right: 4px;
+  position: relative;
+  animation: ai-cursor-blink 0.8s step-end infinite;
+}
+
+/* Add the AI Label only to the last-child so it follows the stream */
+meeting[status='finalized']:last-child::after {
+  content: 'Whisper AI';
+  position: absolute;
+  top: -18px;
+  right: -3px;
+  background: #3b82f6;
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 1px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 10;
+  /* Smoothly fade the label in/out */
+  animation: label-appear 0.3s ease-out forwards;
+}
+
+@keyframes ai-cursor-blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes label-appear {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+meeting[animate='true'] {
+  display: block;
+  /* Start hidden on the left */
+  clip-path: inset(0 100% 0 0);
+  animation: whisper-reveal-clip 1.5s ease-out forwards;
+}
+
+@keyframes whisper-reveal-clip {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.rm-link {
+  color: #0563c1;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rm-link:visited {
+  color: #954f72;
+}
+
+.rm-link:hover {
+  color: #0b63d5;
+}
+
+.rm-page-spacer {
+  display: block;
+  width: 100%;
+}
+
+.rm-page-spacer:focus-within {
+  outline: 1px dashed rgba(0, 0, 0, 0.18);
+  outline-offset: 6px;
+}
+
+.rm-page-spacer:empty::before {
+  content: 'Click to type';
+  display: block;
+  padding: 12px;
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Animation preview (slides) */
+.animate-preview {
+  animation: dynadoc-animation-preview 0.6s ease-in-out both;
+}
+
+@keyframes dynadoc-animation-preview {
+  0% {
+    opacity: 0.2;
+    transform: translateY(6px) scale(0.98);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Document theme + effects (Design tab) */
+[data-doc-theme] .ProseMirror h1,
+[data-doc-theme] .ProseMirror h2,
+[data-doc-theme] .ProseMirror h3,
+[data-doc-theme] .ProseMirror h4 {
+  color: var(--doc-theme-accent, #2f2f2f);
+}
+
+[data-doc-theme] .ProseMirror a {
+  color: var(--doc-theme-link, #0563c1);
+}
+
+[data-doc-effects='subtle'] .ProseMirror img,
+[data-doc-effects='subtle'] .ProseMirror table {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+}
+
+[data-doc-effects='crisp'] .ProseMirror img,
+[data-doc-effects='crisp'] .ProseMirror table {
+  border: 1px solid rgba(15, 23, 42, 0.2);
+}
+
+[data-doc-effects='shadow'] .ProseMirror img,
+[data-doc-effects='shadow'] .ProseMirror table {
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.25);
+  border-radius: 6px;
+}
+
+/* ----- Pagination */
+
+/* The background "Desk" */
+.tiptap-pagination-wrapper {
+  background-color: #f3f3f3 !important;
+  padding: 40px 0;
+}
+
+/* Target the internal page containers created by the extension */
+[data-tiptap-pagination-page],
+.tiptap-page {
+  background-color: white !important;
+  box-shadow:
+    0 0 10px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid #d1d1d1 !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ----- Find & Replace highlights */
+.find-match {
+  background: rgba(255, 206, 90, 0.35);
+  border-radius: 2px;
+}
+
+.find-match--current {
+  background: rgba(255, 160, 30, 0.65);
+  outline: 1px solid rgba(255, 160, 30, 0.9);
+  border-radius: 2px;
+}
+
+.find-match-block {
+  outline: 2px solid rgba(255, 206, 90, 0.6);
+  border-radius: 4px;
+}
+
+.find-match-block--current {
+  outline: 2px solid rgba(255, 160, 30, 0.9);
+  border-radius: 4px;
+}
+
+/* ── Monaco inline code block ─────────────────────────────────────────── */
+.monaco-code-inline {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f4f5f7;
+  border: 1px solid #dfe1e6;
+  margin: 4px 0;
+}
+
+.monaco-code-inline pre {
+  margin: 0;
+  padding: 12px 14px;
+}
+
+.monaco-code-inline pre code.hljs {
+  display: block;
+  background: transparent;
+  color: #172b4d;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 0;
+}
+
+.monaco-code-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+  background: #e8eaed;
+  border-top: 1px solid #dfe1e6;
+}
+
+.monaco-lang-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #42526e;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 1px 2px;
+  outline: none;
+}
+
+.monaco-lang-select:hover,
+.monaco-lang-select:focus {
+  opacity: 0.9;
+}
+
+.monaco-lang-select option {
+  background: #1e222d;
+  color: #f0f2f7;
+}
+
+.monaco-expand-btn {
+  opacity: 0.35;
+  transition: opacity 0.15s;
+  padding: 1px 5px;
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.monaco-expand-btn:hover {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-modern.theme-light .monaco-code-footer {
+  background: rgba(0, 0, 0, 0.03);
+  border-top-color: rgba(0, 0, 0, 0.07);
+}
+
+.theme-modern.theme-light .monaco-lang-select option {
+  background: #ffffff;
+  color: #0f1115;
+}
+
+.theme-modern.theme-light .monaco-expand-btn:hover {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ===================================================================== */

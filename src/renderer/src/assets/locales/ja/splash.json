@@ -1,0 +1,23 @@
+{
+  "splash": {
+    "launchTitle": "Dynadoc を起動しています",
+    "preparing": "Dynadoc を準備中",
+    "loadingUI": "UI とサービスを読み込み中。",
+    "restoring": "ドキュメントとセッションを復元中。",
+    "connecting": "ワークスペースを接続中。",
+    "readySubtitle": "ワークスペースの準備完了。",
+    "recentTitle": "最近のドキュメント",
+    "recentLoading": "最近のファイルを読み込み中…",
+    "noRecent": "最近のドキュメントはありません。",
+    "statusLaunching": "起動中",
+    "statusLoading": "UI 読み込み",
+    "statusRestoring": "復元中",
+    "statusAlmost": "まもなく準備完了",
+    "statusReady": "準備完了",
+    "tipsCommand": "ヒント：⌘K でコマンド。",
+    "tipsTabs": "ヒント：タブをドラッグ。",
+    "tipsSlash": "ヒント：/ で挿入。",
+    "tipsSlides": "ヒント：スライドを右クリック。",
+    "systemLanguage": "システム言語"
+  }
+}

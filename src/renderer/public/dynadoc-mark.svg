@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#0C7C66"/>
+  <path fill="#FFFFFF" fill-rule="evenodd" d="
+    M 7 6
+    H 17.5
+    C 23.297 6, 27 9.703, 27 16
+    C 27 22.297, 23.297 26, 17.5 26
+    H 7
+    Z
+    M 13 11
+    V 21
+    H 16.5
+    C 19.537 21, 21.5 19.037, 21.5 16
+    C 21.5 12.963, 19.537 11, 16.5 11
+    Z
+    M 18.5 15.25
+    H 24
+    V 16.75
+    H 18.5
+    Z" />
+</svg>

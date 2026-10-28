@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: [dependencies]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      tiptap:
+        patterns: ['@tiptap/*']
+      fluentui:
+        patterns: ['@fluentui/*']
+      capacitor:
+        patterns: ['@capacitor/*', '@capawesome/*']
+      eslint:
+        patterns: ['eslint', 'eslint-*', '@typescript-eslint/*', 'prettier', 'prettier-*', 'husky', 'lint-staged']
+      types:
+        patterns: ['@types/*']
+    ignore:
+      # Electron + electron-builder major bumps require manual validation (native modules, signing, auto-update).
+      - dependency-name: electron
+        update-types: [version-update:semver-major]
+      - dependency-name: electron-builder
+        update-types: [version-update:semver-major]
+      - dependency-name: electron-vite
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    labels: [dependencies, ci]
+    commit-message:
+      prefix: ci
+      include: scope

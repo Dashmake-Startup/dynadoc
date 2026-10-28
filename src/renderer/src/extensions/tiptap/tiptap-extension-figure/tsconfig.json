@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "lib": ["es2020", "dom"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "dist",
+    "noEmit": false,
+    "rootDir": "./src"
+  },
+  "include": [
+    "src",
+    "src/assets/icons/svg.d.ts",
+    "src/assets/styles/styles.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,11 @@
+body {
+  font-family: sans-serif;
+  color: var(--fp-body-color);
+  background-color: var(--fp-body-bg);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}

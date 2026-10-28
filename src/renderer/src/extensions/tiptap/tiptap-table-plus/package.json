@@ -1,0 +1,50 @@
+{
+  "name": "tiptap-table-plus",
+  "version": "2.0.9",
+  "description": "Tiptap table extra options like duplicate column, duplicate row etc...",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc-watch --onSuccess \"echo 'Build completed'\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomikMakavana/tiptap-table-plus.git"
+  },
+  "keywords": [
+    "tiptap",
+    "tiptap extension",
+    "table",
+    "pagination"
+  ],
+  "author": "Romik Makavana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RomikMakavana/tiptap-table-plus/issues"
+  },
+  "homepage": "https://romikmakavana.me/tiptap/table-plus",
+  "peerDependencies": {
+    "@tiptap/extension-table": "^2.0.0",
+    "@tiptap/extension-table-cell": "^2.0.0",
+    "@tiptap/extension-table-header": "^2.0.0",
+    "@tiptap/extension-table-row": "^2.0.0",
+    "@tiptap/pm": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tiptap/extension-table": "^2.26.1",
+    "@tiptap/extension-table-cell": "^2.26.1",
+    "@tiptap/extension-table-header": "^2.26.1",
+    "@tiptap/extension-table-row": "^2.26.1",
+    "@tiptap/pm": "^2.26.1",
+    "@types/node": "^22.15.2",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.8.3"
+  }
+}

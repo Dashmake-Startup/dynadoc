@@ -1,0 +1,4 @@
+# Directories with known/third-party cycles
+# src/renderer/src/extensions/
+# src/renderer/src/components/
+# src/renderer/src/libs/

@@ -1,0 +1,23 @@
+{
+  "splash": {
+    "launchTitle": "Dynadoc se prépare",
+    "preparing": "Préparation de Dynadoc",
+    "loadingUI": "Chargement de l’interface et des services.",
+    "restoring": "Restauration des documents et de la session.",
+    "connecting": "Connexion des utilitaires d’espace de travail.",
+    "readySubtitle": "Espace de travail prêt.",
+    "recentTitle": "Documents récents",
+    "recentLoading": "Chargement des fichiers récents…",
+    "noRecent": "Aucun document récent.",
+    "statusLaunching": "Démarrage",
+    "statusLoading": "Chargement UI",
+    "statusRestoring": "Restauration",
+    "statusAlmost": "Presque prêt",
+    "statusReady": "Prêt",
+    "tipsCommand": "Astuce : appuyez sur ⌘K pour la palette.",
+    "tipsTabs": "Astuce : faites glisser les onglets.",
+    "tipsSlash": "Astuce : utilisez / pour insérer.",
+    "tipsSlides": "Astuce : clic droit sur une diapo.",
+    "systemLanguage": "Langue système"
+  }
+}

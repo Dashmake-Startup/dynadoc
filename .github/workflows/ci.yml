@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+
+# What this CI covers:
+#   - Circular import detection in Tiptap extensions (hard gate)
+#   - ESLint (informational — pre-existing debt)
+#   - TypeScript errors in main/preload (informational — pre-existing debt)
+#
+# Not covered (intentional, tracked in SPEC-001):
+#   - svelte-check (renderer)
+#   - Build / bundle validation
+#   - Unit or integration tests
+#   - electron-rebuild (requires native libs not available on ubuntu-latest)
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # --ignore-scripts: skips electron-rebuild postinstall which requires
+      # libcairo2-dev/libpango (native deps) not present on ubuntu-latest.
+      # Risk: skips all postinstall scripts. Packages relying on postinstall
+      # for type generation (e.g. patch-package) may behave differently in CI.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      # Informational — pre-existing lint debt. Does not block CI yet.
+      # Tighten to a hard gate once the baseline is cleared.
+      - name: ESLint
+        run: npm run lint -- --no-fix
+        continue-on-error: true
+
+      # Informational — 23 pre-existing errors in src/main + vite configs.
+      # Does not block CI. Tracked in SPEC-001 Sanitisation Electron.
+      - name: TypeScript check (main + preload)
+        run: npm run typecheck:node
+        continue-on-error: true
+
+      # Hard gate — fails if new circular imports are introduced above baseline.
+      # Baseline: 255 pre-existing cycles in Tiptap extensions (documented in CLAUDE.md).
+      - name: Check circular imports
+        run: npm run check:cycles

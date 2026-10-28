@@ -1,0 +1,49 @@
+{
+    "name": "tiptap-extension-pagination",
+    "version": "2.1.4",
+    "description": "Add pagination to your Tiptap editor",
+    "author": {
+        "name": "Hugo Burton",
+        "email": "burto732@gmail.com",
+        "url": "https://www.github.com/hugs7"
+    },
+    "keywords": [
+        "tiptap",
+        "pagination",
+        "editor",
+        "rich-text"
+    ],
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hugs7/tiptap-extension-pagination.git"
+    },
+    "homepage": "https://www.github.com/hugs7/tiptap-extension-pagination",
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "npm run clean && rollup -c && npm run post-build",
+        "post-build": "tsc-alias",
+        "dev": "npm run clean && rollup -c -w",
+        "prepublishOnly": "npm run build"
+    },
+    "devDependencies": {
+        "@changesets/cli": "^2.28.1",
+        "@rollup/plugin-babel": "^6.0.3",
+        "@rollup/plugin-commonjs": "^28.0.2",
+        "@rollup/plugin-typescript": "^12.1.2",
+        "rimraf": "^6.0.1",
+        "rollup": "^4.34.0",
+        "rollup-plugin-auto-external": "^2.0.0",
+        "tsc-alias": "^1.8.10",
+        "tslib": "^2.8.1",
+        "typescript": "^5.7.3"
+    },
+    "peerDependencies": {
+        "@tiptap/core": "^2.11.5",
+        "@tiptap/pm": "^2.11.5"
+    }
+}

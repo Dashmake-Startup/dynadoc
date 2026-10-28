@@ -1,0 +1,50 @@
+{
+  "name": "tiptap-pagination-plus",
+  "version": "1.2.2",
+  "description": "Tiptap pagination extension with advanced options like automatic page breaks, customizable layouts and more.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc-watch --onSuccess \"echo 'Build completed'\""
+  },
+  "keywords": [
+    "tiptap",
+    "tiptap extension",
+    "pagination",
+    "page",
+    "break",
+    "header",
+    "footer",
+    "customizable",
+    "layouts",
+    "extension"
+  ],
+  "author": "Romik Makavana",
+  "license": "MIT",
+  "devDependencies": {
+    "@tiptap/core": "^2.26.1",
+    "@tiptap/pm": "^2.26.1",
+    "@types/node": "^22.15.2",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.8.3"
+  },
+  "bugs": {
+    "url": "https://github.com/RomikMakavana/tiptap-pagination-plus/issues"
+  },
+  "homepage": "https://romikmakavana.me/tiptap-pagination/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RomikMakavana/tiptap-pagination-plus"
+  },
+  "peerDependencies": {
+    "@tiptap/core": "^2.0.0",
+    "@tiptap/pm": "^2.0.0"
+  }
+}

@@ -1,0 +1,68 @@
+/**
+ * WPS-style design tokens. Defines the --wps-* variables consumed by
+ * wps-skin.css. Light values mirror the WPS template; dark values its
+ * dark variant. The accent stays driven by Dynadoc's per-document-type
+ * --accent so the WPS skin inherits the green/blue/orange/… colours.
+ */
+:root {
+  --wps-font: var(--brand-font-sans);
+
+  /* Layered chrome greys (light) */
+  --wps-bg: #e9eaec;
+  --wps-chrome: #f4f4f6;
+  --wps-tabbar: #e3e3e7;
+  --wps-ribbon: #ffffff;
+  --wps-panel: #ffffff;
+  --wps-page: #ffffff;
+
+  /* Text */
+  --wps-text: #2c2c2e;
+  --wps-text-muted: #86868d;
+  --wps-inert: #5f6066;
+
+  /* Lines / surfaces */
+  --wps-divider: #e2e2e6;
+  --wps-divider-strong: #d8d8de;
+  --wps-line2: #ededf1;
+  --wps-hover: #ececf0;
+  --wps-field: #ffffff;
+  --wps-fieldline: #d8d8de;
+
+  /* Document tabs */
+  --wps-tab-bar-bg: var(--wps-tabbar);
+  --wps-tab-inactive-bg: transparent;
+  --wps-tab-active-bg: var(--wps-ribbon);
+  --wps-tabtxt: #52525a;
+
+  /* The per-document accent drives the file badge / active tab colour. */
+  --wps-app-word: var(--accent);
+
+  /* Metrics */
+  --wps-h-tabbar: 40px;
+  --wps-fs-sm: 12.5px;
+  --wps-radius-md: 6px;
+  --wps-radius-tab: 7px;
+}
+
+:root[data-theme='dark'],
+.dark {
+  --wps-bg: #151517;
+  --wps-chrome: #202023;
+  --wps-tabbar: #1a1a1d;
+  --wps-ribbon: #252528;
+  --wps-panel: #252528;
+  --wps-page: #2b2b2f;
+
+  --wps-text: #e7e7ea;
+  --wps-text-muted: #8f8f97;
+  --wps-inert: #b2b2ba;
+
+  --wps-divider: #37373c;
+  --wps-divider-strong: #45454c;
+  --wps-line2: #2f2f34;
+  --wps-hover: #34343a;
+  --wps-field: #2e2e33;
+  --wps-fieldline: #45454c;
+
+  --wps-tabtxt: #b7b7bf;
+}

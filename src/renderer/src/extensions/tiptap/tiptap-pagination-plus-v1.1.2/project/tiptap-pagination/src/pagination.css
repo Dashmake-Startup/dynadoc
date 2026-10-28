@@ -1,0 +1,20 @@
+.rm-pagination-gap {
+  @apply border-t border-b border-[#e5e5e5];
+}
+
+.rm-with-pagination .rm-page-footer::after {
+  @apply text-gray-500;
+}
+
+.rm-with-pagination .rm-page-footer,
+.rm-with-pagination .rm-page-header {
+  background-color: hsl(var(--background));
+}
+
+.rm-with-pagination table tr:is(:first-child) {
+  @apply mt-4;
+}
+
+.rm-with-pagination table tr:is(:last-child) {
+  @apply mb-4;
+}

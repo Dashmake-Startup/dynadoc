@@ -1,0 +1,41 @@
+// Copyright (C) 2024 Dashmake Inc.
+//
+// This file is part of DDoc Office.
+//
+// DDoc Office is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// DDoc Office is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with DDoc Office.  If not, see <https://www.gnu.org/licenses/>.
+
+
+
+https://www.npmjs.com/package/dree // IMPORTANT: A nodejs module which helps you handle a directory tree. It provides you an object of a directory tree with custom configuration and optional callback method when a file or dir is scanned. You will also be able to turn the tree into a string representation. With Typescript support and both sync and async support.
+
+https://maximmaeder.com/tree-view-with-svelte/ // Tree View with Svelte IMPORTANT
+
+
+https://github.com/dlid/text-treeview // node.js library to write a tree hierarchy for console output.
+
+https://github.com/yangshun/tree-node-cli // Node.js library to list the contents of directories in a tree-like format, similar to the Linux tree command
+
+
+DESIGN
+
+https://melt-ui.com/docs/builders/tree
+
+
+FOR REFERENCE
+
+
+https://github.com/mar10/fancytree // JavaScript tree view / tree grid plugin with support for keyboard, inline editing, filtering, checkboxes, drag'n'drop, and lazy loading
+
+
+FOR FUTURE USE IN PROJET

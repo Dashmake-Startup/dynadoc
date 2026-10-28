@@ -1,0 +1,23 @@
+{
+  "splash": {
+    "launchTitle": "Warming up",
+    "preparing": "Preparing ...",
+    "loadingUI": "Loading UI modules and shared services.",
+    "restoring": "Restoring documents and session state.",
+    "connecting": "Connecting workspace utilities.",
+    "readySubtitle": "Workspace is ready.",
+    "recentTitle": "Recent Documents",
+    "recentLoading": "Loading recent files…",
+    "noRecent": "No recent documents yet.",
+    "statusLaunching": "Launching",
+    "statusLoading": "Loading UI",
+    "statusRestoring": "Restoring",
+    "statusAlmost": "Almost ready",
+    "statusReady": "Ready",
+    "tipsCommand": "Tip: Press ⌘K to open the command palette.",
+    "tipsTabs": "Tip: Drag tabs to reorder your workspace.",
+    "tipsSlash": "Tip: Use / to insert smart blocks.",
+    "tipsSlides": "Tip: Right-click a slide for quick outline actions.",
+    "systemLanguage": "System language"
+  }
+}

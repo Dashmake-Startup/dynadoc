@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ddoc-office</string>
+    <string name="title_activity_main">ddoc-office</string>
+    <string name="package_name">com.ddocoffice.com</string>
+    <string name="custom_url_scheme">com.ddocoffice.com</string>
+</resources>

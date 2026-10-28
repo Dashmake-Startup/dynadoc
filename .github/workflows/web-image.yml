@@ -1,0 +1,85 @@
+name: Web image
+
+# Builds and publishes the web image from this repository alone.
+#
+# Production serves it: `gitops-dynadoc/apps/hub-ch/dynadoc-web.yaml` pins
+# ghcr.io/dashmake-startup/dynadoc-web by commit SHA. It got there because
+# Actions on the private client's account is blocked on billing, so this is
+# now the only pipeline that can produce a web image at all.
+#
+# No personal access token anywhere: the source and the registry share this
+# repository's owner, so the built-in GITHUB_TOKEN suffices.
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'deploy/web/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/**'
+      - '.github/workflows/web-image.yml'
+  pull_request:
+    paths:
+      - 'deploy/web/**'
+      - '.github/workflows/web-image.yml'
+  # A published release, which is what Release Please creates when its PR is
+  # merged. Keyed on the release rather than on the tag push, because a push
+  # trigger carrying `paths` filters the tag event against the same paths and
+  # a fresh tag can produce an empty diff -- the build would then be skipped
+  # silently, which is the one failure a release build must not have.
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build the web image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-buildx-action@v3
+
+      # The built-in token, scoped by `packages: write` above. No personal
+      # access token: a publish that depends on one person's credentials stops
+      # working the day that person's token is rotated.
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # load: false keeps the result in the build cache instead of the daemon.
+      # Nothing consumes the image yet, so there is no reason to materialise it.
+      - name: Build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/web/Dockerfile
+          push: true
+          load: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # Two tags, and the commit one is what production pins to: `latest`
+          # moves under a running deployment, so a pod restart would otherwise
+          # decide on its own what to serve. The commit tag is immutable and
+          # traces a running image back to the source it was built from.
+          #
+          # The owner is lowercased here rather than interpolated: a registry
+          # repository name must be lowercase, and this organisation is spelled
+          # with capitals, so ${{ github.repository_owner }} produces a tag the
+          # builder rejects outright. That is what the first run of this gate
+          # found, which is a fair result for a gate whose job is to find things.
+          #
+          # On a published release, the version tag is added alongside. An
+          # empty line is ignored by the builder, so the expression collapses
+          # to nothing on an ordinary push.
+          tags: |
+            ghcr.io/dashmake-startup/dynadoc-web:${{ github.sha }}
+            ghcr.io/dashmake-startup/dynadoc-web:latest
+            ${{ github.event_name == 'release' && format('ghcr.io/dashmake-startup/dynadoc-web:{0}', github.event.release.tag_name) || '' }}
