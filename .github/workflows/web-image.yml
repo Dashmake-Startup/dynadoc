@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
       # The built-in token, scoped by `packages: write` above. No personal
       # access token: a publish that depends on one person's credentials stops
