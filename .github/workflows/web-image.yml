@@ -57,7 +57,7 @@ jobs:
       # load: false keeps the result in the build cache instead of the daemon.
       # Nothing consumes the image yet, so there is no reason to materialise it.
       - name: Build
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: deploy/web/Dockerfile
